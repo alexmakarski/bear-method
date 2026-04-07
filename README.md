@@ -67,7 +67,7 @@ The included `tools/serpapi.sh` utility is shared infrastructure that also serve
 
 ## Ecosystem
 
-BEAR is one of three open-source diagnostic methods:
+BEAR is part of a family of open-source diagnostic methods:
 
 | Method | What it diagnoses | Repo |
 |--------|-------------------|------|
@@ -75,7 +75,7 @@ BEAR is one of three open-source diagnostic methods:
 | **SONAR** | "Where is the margin going and what's the highest-leverage operational fix?" | [sonar-method](https://github.com/alexmakarski/sonar-method) |
 | **BEAR** | "What changed in your market and what does it mean for your positioning?" | This repo |
 
-These feed into commercial products (AdGradr, ECHO, SimPanel) but work independently as standalone diagnostic tools.
+These feed into commercial products ([AdGradr](https://adgradr.com), ECHO, [SimPanel](https://simpanel.ai)) but work independently as standalone diagnostic tools.
 
 ## License
 
