@@ -1,4 +1,4 @@
-# BEAR Method v1.3.0
+# BEAR Method v2.0.0
 
 **Buyer Environment Analysis & Repositioning**
 
@@ -49,7 +49,7 @@ cd bear-method
 ./install-bear.sh
 ```
 
-See [INSTALL.md](INSTALL.md) for details and optional SerpAPI setup.
+See [INSTALL.md](INSTALL.md) for details.
 
 ## Quick start
 
@@ -59,11 +59,11 @@ See [INSTALL.md](INSTALL.md) for details and optional SerpAPI setup.
 /bear compare {client-name}     # Compare two existing snapshots
 ```
 
-## Optional: SerpAPI integration
+## Open source vs. operational
 
-BEAR works without any API keys (uses WebFetch and WebSearch fallbacks). For structured Google Trends data, add a SerpAPI key ($25/mo). See [INSTALL.md](INSTALL.md).
+This is the open source methodology. It teaches the diagnostic framework and works as a standalone Claude Code skill using manual web research.
 
-The included `tools/serpapi.sh` utility is shared infrastructure that also serves ECHO (competitive ad messaging analysis).
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) adds automated data pipelines, structured API integrations, monitoring, and visual output. The methodology is the same. The tooling is different.
 
 ## Ecosystem
 

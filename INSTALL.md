@@ -17,19 +17,6 @@ This copies the BEAR skill into `~/.claude/skills/bear/`.
 | BEAR skill | `~/.claude/skills/bear/SKILL.md` | The diagnostic methodology |
 | Snapshot schema | `~/.claude/skills/bear/references/snapshot-schema.md` | Market state capture format |
 
-## Optional: SerpAPI for Google Trends
-
-BEAR works without SerpAPI. It falls back to WebFetch and WebSearch for Google Trends data. But structured API data is more reliable.
-
-To set up SerpAPI:
-
-1. Sign up at [serpapi.com](https://serpapi.com) ($25/mo for 1,000 searches)
-2. Copy `.env.example` to `.env` in your project root
-3. Add your API key
-4. Copy `tools/serpapi.sh` to your project's `.claude/tools/` directory
-
-The SerpAPI tool is a shared utility. It serves both BEAR (Google Trends engine) and ECHO (Google Search engine) if you use both products.
-
 ## Usage
 
 Open Claude Code in any project directory:
@@ -41,6 +28,10 @@ Open Claude Code in any project directory:
 ```
 
 BEAR will ask for the required inputs (client details, keywords, geography, symptom description) before starting.
+
+## Google Trends data
+
+BEAR uses Google Trends data for demand signal analysis. The open source version uses WebSearch to gather this data manually. For automated structured access, consider a Google Trends API service.
 
 ## Ecosystem
 
