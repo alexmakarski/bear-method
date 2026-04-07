@@ -1,6 +1,6 @@
 ---
 name: bear
-version: 1.3.0
+version: 1.4.0
 description: "BEAR (Buyer Environment Analysis & Repositioning). Diagnoses why business development stopped working by analyzing market shifts, competitive convergence, and buyer environment changes. Covers all symptom types: ad performance decline, close rate collapse, referral source drought, and pipeline stall. Produces a temporal market diagnosis with repositioning recommendations. Use when results changed but the business didn't, or when entering a new market and needing competitive landscape intelligence."
 interface: "invoke: /bear {mode} {client-name}"
 modes: [diagnose, snapshot, compare]
@@ -124,30 +124,40 @@ For each of the client's 5-10 keywords:
 
 **How to pull Google Trends data:**
 
-Use WebFetch to hit Google Trends explore URLs directly. These return the page content with trend data:
+**Use SerpAPI. This is the primary and only method.** The tool lives at `.claude/tools/serpapi.sh`. Do NOT use WebFetch on trends.google.com -- it rate-limits (429) consistently.
 
-```
-WebFetch: https://trends.google.com/trends/explore?q={keyword}&geo={geo_code}&date=today%2012-m
-```
-
-Where:
-- `{keyword}` = URL-encoded keyword (e.g., `plantation%20shutters`)
-- `{geo_code}` = ISO country/region code (e.g., `US`, `AU`, `US-IL` for Illinois, `GB` for UK)
-- `date=today%2012-m` = last 12 months. Use `today%205-y` for 5 years. Use `2024-01-01%202025-01-01` for a specific range.
-
-For comparing multiple keywords (up to 5):
-```
-WebFetch: https://trends.google.com/trends/explore?q={kw1},{kw2},{kw3}&geo={geo_code}&date=today%2012-m
+**Interest over time (timeseries):**
+```bash
+bash .claude/tools/serpapi.sh trends "{keyword}" {GEO} "today 12-m"
 ```
 
-**Related queries and topics** are on the same page. Look for "Related queries" and "Related topics" sections. The "Rising" tab shows queries gaining momentum. "Breakout" means >5000% growth.
+Examples:
+```bash
+# Single keyword, Australia, 12 months
+bash .claude/tools/serpapi.sh trends "roller shutters" AU "today 12-m"
 
-**If WebFetch doesn't return structured data** (Google Trends sometimes blocks or returns JS-only content), fall back to:
-1. WebSearch for `"{keyword}" google trends {year}` to find articles citing Trends data
-2. WebSearch for `"{keyword}" search interest declining OR rising OR trending` to find corroborating signals
-3. Note the gap and proceed. The engagement isn't blocked -- Trends enriches the diagnosis but isn't the only signal.
+# Single keyword, Victoria only, 5 years
+bash .claude/tools/serpapi.sh trends "roller shutters" AU-VIC "today 5-y"
 
-**SerpAPI integration (when available):** If SerpAPI access exists, use the `google_trends` engine for structured JSON responses. This is the most reliable method. Query: `engine=google_trends&q={keyword}&geo={geo_code}&date=today+12-m&data_type=TIMESERIES`.
+# Single keyword, US/Illinois, 12 months
+bash .claude/tools/serpapi.sh trends "plantation shutters" US-IL "today 12-m"
+```
+
+**Related queries:**
+```bash
+bash .claude/tools/serpapi.sh related "{keyword}" {GEO} "today 12-m"
+```
+
+**Geo codes:**
+- Country: `US`, `AU`, `GB`, `CA`
+- State/region: `US-IL` (Illinois), `AU-VIC` (Victoria), `AU-NSW` (New South Wales)
+- Date ranges: `"today 12-m"` (12 months), `"today 5-y"` (5 years), `"2024-01-01 2025-01-01"` (custom range)
+
+**Parse the JSON output** with python3 to extract the `interest_over_time.timeline_data` array. Each entry has `date` and `values[0].value` (0-100 index). For related queries, extract `related_queries.rising` and `related_queries.top`.
+
+**Run for each keyword individually.** SerpAPI's trends engine handles one keyword per call for timeseries data. Run them in parallel where possible.
+
+**If SerpAPI returns an error** (occasional "couldn't get valid results"), retry once. If it fails again, note the gap and proceed -- the engagement isn't blocked by a single missing keyword.
 
 **What to capture per keyword:**
 
@@ -504,3 +514,4 @@ BEAR/{client-name}/
 - **1.1.0** (2026-04-06): Added Symptom Taxonomy (Types A-E). BEAR now handles close rate collapse, referral drought, and pipeline stall -- not just ad performance decline. Inputs section updated with symptom-specific performance data requirements and sales conversation notes. Signal collection priorities now vary by symptom type.
 - **1.2.0** (2026-04-06): Integrated Girardian analysis natively. Competitive research now includes desire mediation mapping, model identification, suppressed desire detection, and direction-of-imitation tracking. Shift categories deepened with mimetic theory. Anti-mimetic repositioning framework added.
 - **1.3.0** (2026-04-06): Replaced vague "use WebSearch for Trends" with proper Google Trends research protocol. WebFetch URLs with geo-targeting and date parameters, multi-keyword comparison URLs, SerpAPI integration path, structured capture table, fallback chain when Trends blocks. Snapshot schema enriched with category-vs-niche divergence and geographic shift tracking. Competitive research now includes desire mediation mapping, model identification, suppressed desire detection, and direction-of-imitation tracking. Shift categories deepened: Competitive Convergence reframed as Mimetic Crisis, Demand Shift as Desire Migration, Model Disruption as New Mediator. Repositioning framework upgraded with anti-mimetic strategy (imitation trap test, suppressed desire territory, defensibility analysis). All Girardian concepts are our own implementation from public theory -- no external skill dependencies.
+- **1.4.0** (2026-04-07): SerpAPI is now the primary and only method for Google Trends data. Removed WebFetch fallback chain (trends.google.com consistently 429s). Added bash command examples with geo codes for country and state/region targeting, date range options, and JSON parsing guidance. First real engagement (Titan Shutters, Melbourne) validated the full workflow and surfaced the SerpAPI-first requirement.
