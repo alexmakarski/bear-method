@@ -119,7 +119,7 @@ BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositio
 
 This is the open source methodology. Same diagnostic framework, same shift categories, same evidence standards. Works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by [**market-signals MCP**](https://github.com/clickmakers-io/market-signals-mcp), a remote MCP server with 16 live data tools:
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 16 live data tools:
 
 | Tool | What it provides | Source |
 |------|------------------|--------|
