@@ -1,4 +1,4 @@
-# BEAR Method v2.0.0
+# BEAR Method v3.12.0
 
 **Buyer Environment Analysis & Repositioning**
 
@@ -11,29 +11,47 @@ No existing product diagnoses this systematically. BEAR does.
 ## How it works
 
 ```
-Phase 1: Signal Collection (Google Trends, competitive landscape, economic context, client data)
-Phase 2: Snapshot Capture (structured market state at two points in time)
-Phase 3: Shift Diagnosis (what changed, classified into 5 categories)
-Phase 4: Repositioning Recommendation (concrete, testable, one primary move)
+Phase 0: Workspace Setup (folder structure + data placement guide)
+Phase 1: Signal Collection (Google Trends, competitive landscape, economic context, client data, industry signals)
+Phase 2: Shift Diagnosis (what changed, classified into 6 categories)
+Phase 2.5: Evidence Weighing (stress-test the diagnosis before acting on it)
+Phase 3: Repositioning Recommendation (concrete, testable, one primary move)
+Phase 4: Scenario Modeling (three forward-looking scenarios tied to observable indicators)
+Phase 5: SimPanel Validation (optional buyer panel testing via simpanel.ai)
 ```
 
 ## Five symptom types
 
 BEAR isn't just for ad performance decline. It handles:
 
-- **Type A: Acquisition decline** -- leads dried up, CPAs doubled
-- **Type B: Close rate collapse** -- leads come in but deals don't close
-- **Type C: Referral drought** -- referral sources went quiet
-- **Type D: Pipeline stall** -- proposals out, nothing moving
-- **Type E: Mixed** -- everything slowed down
+- **Type A: Acquisition decline** (leads dried up, CPAs doubled)
+- **Type B: Close rate collapse** (leads come in but deals don't close)
+- **Type C: Referral drought** (referral sources went quiet)
+- **Type D: Pipeline stall** (proposals out, nothing moving)
+- **Type E: Mixed** (everything slowed down)
 
-## Five shift categories
+## Six shift categories
 
-- **Competitive Convergence (Mimetic Crisis)** -- everyone says the same thing, market collapses into price competition
-- **Demand Shift (Desire Migration)** -- buyers want something different now
-- **Platform Change** -- the channel repriced
-- **External Shock** -- regulation, economy, geopolitics changed the rules
-- **Model Disruption (New Mediator)** -- a new player redirected buyer attention
+- **Competitive Convergence (Mimetic Crisis)** : everyone says the same thing, market collapses into price competition
+- **Demand Shift (Desire Migration)** : buyers want something different now
+- **Platform Change** : the channel repriced
+- **External Shock** : regulation, economy, geopolitics changed the rules
+- **Model Disruption (New Mediator)** : a new player redirected buyer attention
+- **Category Dissolution** : the service category itself is losing viability (supply flood + price anchor collapse + buyer migration to adjacent categories)
+
+## Signal Registry
+
+14 industry tags with pre-mapped data sources: home services, roofing, HVAC, tree service, shutters/blinds, ecommerce, agency, SaaS, professional services, healthcare, restaurant, real estate, auto, fitness. Plus a general fallback.
+
+## Chart generation
+
+Five chart types ship with BEAR, generated from JSON data:
+
+- Confidence/indicator timeline
+- Search vs. lead gap
+- Competitive convergence map
+- Cost pressure bars
+- Pulse sparklines
 
 ## What makes BEAR different
 
@@ -55,15 +73,18 @@ See [INSTALL.md](INSTALL.md) for details.
 
 ```
 /bear diagnose {client-name}    # Full market shift diagnosis
-/bear snapshot {client-name}    # Single market state capture
-/bear compare {client-name}     # Compare two existing snapshots
+/bear pulse {client-name}       # Weekly monitoring check
 ```
+
+## Optional: buyer validation
+
+BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositioning recommendations against synthetic buyer panels before presenting to clients. This phase is optional and human-gated.
 
 ## Open source vs. operational
 
 This is the open source methodology. It teaches the diagnostic framework and works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) adds automated data pipelines, structured API integrations, monitoring, and visual output. The methodology is the same. The tooling is different.
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) adds automated data pipelines (SerpAPI, FRED, commodity feeds), MCP server integrations, and publishing workflows. The methodology is the same. The tooling is different.
 
 ## Ecosystem
 
