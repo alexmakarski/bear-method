@@ -58,7 +58,25 @@ The quadrant determines the type of recommendation. What you tell a dog is funda
 
 ## Signal Registry
 
-14 industry tags with pre-mapped data sources: home services, roofing, HVAC, tree service, shutters/blinds, ecommerce, agency, SaaS, professional services, healthcare, restaurant, real estate, auto, fitness. Plus a general fallback.
+Each engagement is tagged with an industry. The tag determines which additional data sources BEAR pulls beyond the baseline (Trends, competitive landscape, economic context).
+
+| Tag | Industry | Additional signals |
+|-----|----------|--------------------|
+| `home_services` | Plumbing, electrical, cleaning | Housing starts, permits, home sale volume |
+| `roofing` | Roofing and exterior | Storm/hail data, FEMA disaster declarations, insurance claims |
+| `hvac` | Heating, ventilation, AC | Temperature anomalies, energy prices, refrigerant regulations |
+| `tree_service` | Tree care and removal | Storm data, municipal ordinances, pest outbreaks |
+| `shutters_blinds` | Window coverings | Aluminium/PVC prices, energy prices, building codes |
+| `ecommerce` | Online retail / DTC | Tariffs, shipping costs, FX rates, consumer spending |
+| `agency` | Marketing / creative / dev | AI adoption, platform revenue, freelancer marketplace growth |
+| `saas` | Software as a Service | VC funding trends, tech layoffs, churn benchmarks |
+| `professional_services` | Law, accounting, consulting | Regulatory changes, M&A activity, AI displacement |
+| `healthcare` | Medical, dental, specialists | Insurance reimbursement, telehealth adoption, demographics |
+| `restaurant` | Food service and hospitality | Food costs, labor/minimum wage, delivery platform commissions |
+| `real_estate` | Agents, brokers, property mgmt | Mortgage rates, inventory, days on market, NAR settlement |
+| `auto` | Dealerships, repair, detailing | Used car price indices, EV adoption, parts supply chain |
+| `fitness` | Gyms, studios, personal training | Membership trends, boutique vs. big-box, at-home fitness |
+| `general` | Anything not listed | Baseline signals only |
 
 ## Chart generation
 
@@ -101,22 +119,40 @@ BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositio
 
 This is the open source methodology. Same diagnostic framework, same shift categories, same evidence standards. Works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) automates the data collection and delivery:
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by [**market-signals MCP**](https://github.com/clickmakers-io/market-signals-mcp), a remote MCP server with 16 live data tools:
 
-| | Open source | Operational |
+| Tool | What it provides | Source |
+|------|------------------|--------|
+| `google_trends` | Search interest timeseries (0-100 index, weekly) | SerpAPI |
+| `google_search` | Organic results + ads for competitive research | SerpAPI |
+| `google_maps` | Local competitor counts, ratings, review volumes | SerpAPI |
+| `google_autocomplete` | Buyer intent signals, category migration queries | SerpAPI |
+| `google_shopping` | Price landscape, seller counts, product ratings | SerpAPI |
+| `fred_data` | 13 US macro indicators (consumer sentiment, CPI, unemployment, etc.) | FRED |
+| `commodity_prices` | 9 commodities (aluminium, oil, copper, natural gas, etc.) | Alpha Vantage |
+| `polymarket` | Prediction market probabilities on economic/political events | Polymarket |
+| `bls_jolts` | Monthly layoffs, job openings, hires by industry | BLS |
+| `business_formation` | New business applications by sector (leading indicator of supply flood) | Census BFS |
+| `wage_trends` | Annual median wages by industry (wage compression = supply flood) | BLS OES |
+| `shipping_rates` | Container shipping rates by trade lane | Freightos |
+| `news_volume` | Article count and sentiment by keyword over time | GDELT |
+| `bea_gdp_by_industry` | Quarterly GDP growth/contraction by sector | BEA |
+| `bls_qcew` | Quarterly employment and wages by industry and county | BLS |
+| `census_sector_revenue` | Monthly/quarterly actual revenue by sector | Census |
+
+The open source version gathers equivalent data via manual WebSearch. The methodology is identical. The difference:
+
+| | Open source | With market-signals MCP |
 |---|---|---|
-| Methodology | Full | Full |
-| Market position assessment | Star/Dog grid from manual research | Star/Dog grid confirmed by leading AND trailing government data |
-| Google Trends | Manual WebSearch | Structured API with timeseries data |
-| Competitive landscape | Manual WebSearch | Google Maps (competitor counts, ratings), Shopping (price landscape), Autocomplete (buyer intent signals) |
-| Sector health data | Manual WebSearch | 16 live data feeds: GDP by industry, employment by county, sector revenue, FRED, BLS JOLTS, commodity prices, shipping rates, news volume, wage trends, Polymarket, and more |
+| Data collection | Manual WebSearch per source | 16 structured API calls |
+| Star/Dog determination | Leading indicators only | Leading + trailing government data |
 | Chart data | Manual JSON assembly | Auto-populated from API responses |
 | Client delivery | Local files | One-command publish to shared wiki |
 | Team workflow | Single user | Sync diagnoses across team members |
-| Diagnosis comparison | Manual | `/bear diff` compares any two diagnoses side by side |
-| Weekly pulse | ~15 min (manual lookups) | ~5 min (automated data pulls) |
+| Diagnosis comparison | Manual | `/bear diff` compares any two side by side |
+| Weekly pulse | ~15 min | ~5 min |
 
-The methodology is identical. The difference is data depth and delivery speed. [Learn more at clickmakers.io](https://clickmakers.io)
+[Learn more at clickmakers.io](https://clickmakers.io)
 
 ## Ecosystem
 
