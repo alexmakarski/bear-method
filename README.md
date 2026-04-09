@@ -1,4 +1,4 @@
-# BEAR Method v3.16.0
+# BEAR Method v3.17.0
 
 **Buyer Environment Analysis & Repositioning**
 
@@ -119,7 +119,7 @@ BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositio
 
 This is the open source methodology. Same diagnostic framework, same shift categories, same evidence standards. Works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 17 live data tools across three layers:
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 18 live data tools across three layers:
 
 **Global tools (any country):**
 
@@ -131,6 +131,7 @@ The operational version (used internally at [ClickMakers](https://clickmakers.io
 | `google_autocomplete` | Buyer intent signals, category migration queries |
 | `google_shopping` | Price landscape, seller counts, product ratings |
 | `commodity_prices` | 9 commodities (aluminium, oil, copper, natural gas, etc.) |
+| `wb_commodity_prices` | 29 commodities from World Bank (timber, metals, fertilizers, rubber, agriculture) |
 | `shipping_rates` | Container shipping rates by trade lane |
 | `news_volume` | Article count and sentiment by keyword over time |
 | `polymarket` | Prediction market probabilities on economic/political events |
@@ -157,7 +158,7 @@ The open source version gathers equivalent data via manual WebSearch. The method
 
 | | Open source | With market-signals MCP |
 |---|---|---|
-| Data collection | Manual WebSearch per source | 17 structured API calls |
+| Data collection | Manual WebSearch per source | 18 structured API calls |
 | Country coverage | Any (manual research) | US, Canada, Australia (structured data), any (WebSearch fallback) |
 | Star/Dog determination | Leading indicators only | Leading + trailing government data |
 | Locale awareness | Manual | Automatic (spelling, currency, data sources route by geography) |
