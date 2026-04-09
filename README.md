@@ -119,7 +119,9 @@ BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositio
 
 This is the open source methodology. Same diagnostic framework, same shift categories, same evidence standards. Works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 16 live data tools:
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 17 live data tools across three layers:
+
+**Global tools (any country):**
 
 | Tool | What it provides |
 |------|------------------|
@@ -128,24 +130,37 @@ The operational version (used internally at [ClickMakers](https://clickmakers.io
 | `google_maps` | Local competitor counts, ratings, review volumes |
 | `google_autocomplete` | Buyer intent signals, category migration queries |
 | `google_shopping` | Price landscape, seller counts, product ratings |
-| `fred_data` | 13 US macro indicators (consumer sentiment, CPI, unemployment, etc.) |
 | `commodity_prices` | 9 commodities (aluminium, oil, copper, natural gas, etc.) |
+| `shipping_rates` | Container shipping rates by trade lane |
+| `news_volume` | Article count and sentiment by keyword over time |
 | `polymarket` | Prediction market probabilities on economic/political events |
+
+**US macro tools:**
+
+| Tool | What it provides |
+|------|------------------|
+| `fred_data` | 13 US macro indicators (consumer sentiment, CPI, unemployment, etc.) |
 | `bls_jolts` | Monthly layoffs, job openings, hires by industry |
 | `business_formation` | New business applications by sector (leading indicator of supply flood) |
 | `wage_trends` | Annual median wages by industry (wage compression = supply flood) |
-| `shipping_rates` | Container shipping rates by trade lane |
-| `news_volume` | Article count and sentiment by keyword over time |
 | `bea_gdp_by_industry` | Quarterly GDP growth/contraction by sector |
 | `bls_qcew` | Quarterly employment and wages by industry and county |
 | `census_sector_revenue` | Monthly/quarterly actual revenue by sector |
+
+**Country-specific tools (CA + AU):**
+
+| Tool | What it provides |
+|------|------------------|
+| `country_macro` | Routes to the correct government data source by country. Canada: Bank of Canada rate, USD/CAD, StatCan GDP/employment/retail/housing/business formation. Australia: RBA cash rate, ABS GDP/unemployment/retail/building approvals. |
 
 The open source version gathers equivalent data via manual WebSearch. The methodology is identical. The difference:
 
 | | Open source | With market-signals MCP |
 |---|---|---|
-| Data collection | Manual WebSearch per source | 16 structured API calls |
+| Data collection | Manual WebSearch per source | 17 structured API calls |
+| Country coverage | Any (manual research) | US, Canada, Australia (structured data), any (WebSearch fallback) |
 | Star/Dog determination | Leading indicators only | Leading + trailing government data |
+| Locale awareness | Manual | Automatic (spelling, currency, data sources route by geography) |
 | Chart data | Manual JSON assembly | Auto-populated from API responses |
 | Client delivery | Local files | One-command publish to shared wiki |
 | Team workflow | Single user | Sync diagnoses across team members |
