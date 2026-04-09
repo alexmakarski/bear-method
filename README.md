@@ -82,9 +82,22 @@ BEAR's Phase 5 integrates with [SimPanel](https://simpanel.ai) to test repositio
 
 ## Open source vs. operational
 
-This is the open source methodology. It teaches the diagnostic framework and works as a standalone Claude Code skill using manual web research.
+This is the open source methodology. Same diagnostic framework, same shift categories, same evidence standards. Works as a standalone Claude Code skill using manual web research.
 
-The operational version (used internally at [ClickMakers](https://clickmakers.io)) adds automated data pipelines (SerpAPI, FRED, commodity feeds), MCP server integrations, and publishing workflows. The methodology is the same. The tooling is different.
+The operational version (used internally at [ClickMakers](https://clickmakers.io)) automates the data collection and delivery:
+
+| | Open source | Operational |
+|---|---|---|
+| Methodology | Full | Full |
+| Google Trends | Manual WebSearch | Structured API (SerpAPI) with timeseries data |
+| Macro indicators | Manual WebSearch | Live feeds (FRED, BLS, commodity prices, Polymarket) |
+| Chart data | Manual JSON assembly | Auto-populated from API responses |
+| Client delivery | Local files | One-command publish to shared wiki |
+| Team workflow | Single user | Sync diagnoses across team members |
+| Diagnosis comparison | Manual | `/bear diff` compares any two diagnoses side by side |
+| Weekly pulse | ~15 min (manual lookups) | ~5 min (automated data pulls) |
+
+The methodology is identical. The difference is how long data collection takes and how the output reaches clients. [Learn more at clickmakers.io](https://clickmakers.io)
 
 ## Ecosystem
 

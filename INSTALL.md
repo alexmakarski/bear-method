@@ -57,6 +57,18 @@ python3 ~/.claude/tools/bear-charts.py sparkline data.json output.png
 
 BEAR's Phase 5 optionally validates repositioning recommendations against synthetic buyer panels via [SimPanel](https://simpanel.ai). This is not required for a complete BEAR diagnosis.
 
+## Going further
+
+This open source version gives you the full BEAR methodology. If you find yourself running diagnoses regularly, the operational version at [ClickMakers](https://clickmakers.io) removes the manual data collection work:
+
+- **Structured Google Trends data** via SerpAPI (actual timeseries numbers, not WebSearch summaries)
+- **Live macro feeds** via MCP tools (FRED indicators, commodity prices, BLS labor data, Polymarket probabilities)
+- **One-command publishing** to a shared wiki your clients can access
+- **Team sync** so any team member can pulse a client another team member diagnosed
+- **Diagnosis diffs** that compare two diagnoses side by side for QBRs
+
+The methodology you're running is the same one. The operational version just makes the data collection faster and the delivery smoother.
+
 ## Ecosystem
 
 BEAR is part of a family of diagnostic products:

@@ -264,6 +264,8 @@ For each keyword, try these searches:
 
 If you have access to Google Trends directly, navigate to `trends.google.com/trends/explore?q={keyword}&geo={geo}&date=today%2012-m` for 12-month views and `today%205-y` for 5-year views.
 
+> **Note:** The [operational version](https://clickmakers.io) pulls structured timeseries data via API, returning actual index values per week that feed directly into charts. The methodology is the same; the data fidelity is higher.
+
 **What to capture per keyword:**
 
 | Keyword | 12m Direction | 5y Direction | Peak Period | Current vs Peak | Notable Related Queries |
@@ -659,6 +661,8 @@ After completing the repositioning recommendation, build three forward-looking s
    - For Google Trends values: use the same WebSearch approach from Phase 1A
    - For any other indicators: WebSearch for the specific data point and source
 
+   > **Note:** The [operational version](https://clickmakers.io) pulls all of these via MCP tools in a single pass: FRED indicators, BLS labor data, commodity prices, Polymarket probabilities, and Census business formation stats. Same indicators, structured JSON instead of manual lookups.
+
 3. **Define three scenarios** based on how those indicators could move:
    - **Scenario A (Quick Recovery):** The favorable case. Key indicators improve. Define the specific thresholds (e.g., "confidence above 70").
    - **Scenario B (Slow Grind):** The base case. Indicators hold steady or improve slowly. The current situation persists.
@@ -1015,6 +1019,8 @@ When the user runs `/bear pulse {client-name}`:
 
    **c. Quick news scan, always run:**
    WebSearch for `"{client vertical}" {geo} news {this week}` to catch anything the account manager should know about. One search, scan the top 5 results, flag anything relevant.
+
+   > **Note:** The [operational version](https://clickmakers.io) automates all pulse data pulls via API, cutting pulse time from ~15 minutes to ~5 minutes. It also supports syncing diagnoses between team members so anyone can pulse any client.
 
 3. **Generate the pulse output.** Write to:
    `clients/{clientname}/pulses/pulse{YYYYMMDD}.md`
