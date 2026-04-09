@@ -121,24 +121,24 @@ This is the open source methodology. Same diagnostic framework, same shift categ
 
 The operational version (used internally at [ClickMakers](https://clickmakers.io)) is powered by **market-signals MCP**, a remote MCP server with 16 live data tools:
 
-| Tool | What it provides | Source |
-|------|------------------|--------|
-| `google_trends` | Search interest timeseries (0-100 index, weekly) | SerpAPI |
-| `google_search` | Organic results + ads for competitive research | SerpAPI |
-| `google_maps` | Local competitor counts, ratings, review volumes | SerpAPI |
-| `google_autocomplete` | Buyer intent signals, category migration queries | SerpAPI |
-| `google_shopping` | Price landscape, seller counts, product ratings | SerpAPI |
-| `fred_data` | 13 US macro indicators (consumer sentiment, CPI, unemployment, etc.) | FRED |
-| `commodity_prices` | 9 commodities (aluminium, oil, copper, natural gas, etc.) | Alpha Vantage |
-| `polymarket` | Prediction market probabilities on economic/political events | Polymarket |
-| `bls_jolts` | Monthly layoffs, job openings, hires by industry | BLS |
-| `business_formation` | New business applications by sector (leading indicator of supply flood) | Census BFS |
-| `wage_trends` | Annual median wages by industry (wage compression = supply flood) | BLS OES |
-| `shipping_rates` | Container shipping rates by trade lane | Freightos |
-| `news_volume` | Article count and sentiment by keyword over time | GDELT |
-| `bea_gdp_by_industry` | Quarterly GDP growth/contraction by sector | BEA |
-| `bls_qcew` | Quarterly employment and wages by industry and county | BLS |
-| `census_sector_revenue` | Monthly/quarterly actual revenue by sector | Census |
+| Tool | What it provides |
+|------|------------------|
+| `google_trends` | Search interest timeseries (0-100 index, weekly) |
+| `google_search` | Organic results + ads for competitive research |
+| `google_maps` | Local competitor counts, ratings, review volumes |
+| `google_autocomplete` | Buyer intent signals, category migration queries |
+| `google_shopping` | Price landscape, seller counts, product ratings |
+| `fred_data` | 13 US macro indicators (consumer sentiment, CPI, unemployment, etc.) |
+| `commodity_prices` | 9 commodities (aluminium, oil, copper, natural gas, etc.) |
+| `polymarket` | Prediction market probabilities on economic/political events |
+| `bls_jolts` | Monthly layoffs, job openings, hires by industry |
+| `business_formation` | New business applications by sector (leading indicator of supply flood) |
+| `wage_trends` | Annual median wages by industry (wage compression = supply flood) |
+| `shipping_rates` | Container shipping rates by trade lane |
+| `news_volume` | Article count and sentiment by keyword over time |
+| `bea_gdp_by_industry` | Quarterly GDP growth/contraction by sector |
+| `bls_qcew` | Quarterly employment and wages by industry and county |
+| `census_sector_revenue` | Monthly/quarterly actual revenue by sector |
 
 The open source version gathers equivalent data via manual WebSearch. The methodology is identical. The difference:
 
