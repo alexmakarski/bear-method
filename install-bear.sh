@@ -1,5 +1,5 @@
 #!/bin/bash
-# BEAR Method Installer v3.12.0
+# BEAR Method Installer v3.16.0
 # Copies the BEAR skill and tools into your Claude Code directories.
 # Run from the folder containing this script.
 
@@ -36,7 +36,7 @@ if [ -f "$SOURCE_TOOLS/bear-charts.py" ]; then
 fi
 
 echo ""
-echo "BEAR v3.12.0 installed successfully."
+echo "BEAR v3.16.0 installed successfully."
 echo ""
 echo "Quick start:"
 echo "  /bear diagnose {client-name}    # Full market shift diagnosis"

@@ -1,23 +1,27 @@
-# BEAR Method v3.12.0
+# BEAR Method v3.16.0
 
 **Buyer Environment Analysis & Repositioning**
 
-BEAR is a diagnostic method for Claude Code that answers: "Your business development stopped working. Here's why, and the cause isn't inside your business."
+BEAR is a diagnostic method for Claude Code that answers two questions most businesses never ask:
 
-Markets shift. Competitors converge. Buyer priorities change. Platform algorithms reprice. External shocks rewrite the rules. The business owner sees symptoms (CPA doubled, close rate collapsed, referrals dried up, pipeline stalled) but the cause isn't in their account or their operations. It's in their market.
+1. **Is your category still growing?**
+2. **Are you differentiated within it?**
 
-No existing product diagnoses this systematically. BEAR does.
+If the answer to both is yes, you're a star. Invest. If the answer to both is no, you're a dog. No amount of internal optimization will save you.
+
+Most businesses skip this determination entirely. They assume the category is fine and the problem is execution. They fire the agency, rewrite the ads, restructure the team. Six months later, nothing improved. They do it again. BEAR makes the determination they skip.
 
 ## How it works
 
 ```
-Phase 0: Workspace Setup (folder structure + data placement guide)
-Phase 1: Signal Collection (Google Trends, competitive landscape, economic context, client data, industry signals)
-Phase 2: Shift Diagnosis (what changed, classified into 6 categories)
-Phase 2.5: Evidence Weighing (stress-test the diagnosis before acting on it)
-Phase 3: Repositioning Recommendation (concrete, testable, one primary move)
-Phase 4: Scenario Modeling (three forward-looking scenarios tied to observable indicators)
-Phase 5: SimPanel Validation (optional buyer panel testing via simpanel.ai)
+Phase 0:  Workspace Setup
+Phase 1:  Signal Collection (demand, competitive landscape, economic context, industry signals)
+Phase 2A: Shift Diagnosis (what changed, classified into 6 categories)
+Phase 2B: Evidence Weighing (stress-test the diagnosis before acting on it)
+Phase 2C: Market Position Assessment (Star, Cash Cow, Question Mark, or Dog)
+Phase 3:  Repositioning Recommendation (based on the quadrant, not one-size-fits-all)
+Phase 4:  Scenario Modeling (three conditional projections tied to observable indicators)
+Phase 5:  SimPanel Validation (optional buyer panel testing via simpanel.ai)
 ```
 
 ## Five symptom types
@@ -32,12 +36,25 @@ BEAR isn't just for ad performance decline. It handles:
 
 ## Six shift categories
 
-- **Competitive Convergence (Mimetic Crisis)** : everyone says the same thing, market collapses into price competition
-- **Demand Shift (Desire Migration)** : buyers want something different now
-- **Platform Change** : the channel repriced
-- **External Shock** : regulation, economy, geopolitics changed the rules
-- **Model Disruption (New Mediator)** : a new player redirected buyer attention
-- **Category Dissolution** : the service category itself is losing viability (supply flood + price anchor collapse + buyer migration to adjacent categories)
+When a business moves from star toward dog, one of six external forces is usually responsible:
+
+- **Competitive Convergence (Mimetic Crisis)**: everyone says the same thing, market collapses into price competition
+- **Demand Shift (Desire Migration)**: buyers want something different now
+- **Platform Change**: the channel repriced
+- **External Shock**: regulation, economy, geopolitics changed the rules
+- **Model Disruption (New Mediator)**: a new player redirected buyer attention
+- **Category Dissolution**: the service category itself is losing viability (supply flood + price anchor collapse + buyer migration to adjacent categories)
+
+## Market Position Assessment
+
+After diagnosing what shifted, BEAR determines where the client sits:
+
+| | Category Growing | Category Not Growing |
+|---|---|---|
+| **Differentiated** | **Star.** Adapt to the shift, keep investing. | **Cash Cow.** Harvest, explore adjacent categories. |
+| **Undifferentiated** | **Question Mark.** Differentiate now or become a dog. | **Dog.** Fundamental repositioning or exit. |
+
+The quadrant determines the type of recommendation. What you tell a dog is fundamentally different from what you tell a star having a bad quarter.
 
 ## Signal Registry
 
@@ -89,16 +106,17 @@ The operational version (used internally at [ClickMakers](https://clickmakers.io
 | | Open source | Operational |
 |---|---|---|
 | Methodology | Full | Full |
+| Market position assessment | Star/Dog grid from manual research | Star/Dog grid confirmed by leading AND trailing government data |
 | Google Trends | Manual WebSearch | Structured API with timeseries data |
-| Competitive landscape | Manual WebSearch | Google Maps, Shopping, Autocomplete APIs |
-| Macro indicators | Manual WebSearch | 13 live data feeds (FRED, BLS JOLTS, commodity prices, Polymarket, shipping rates, news volume, wage trends, and more) |
+| Competitive landscape | Manual WebSearch | Google Maps (competitor counts, ratings), Shopping (price landscape), Autocomplete (buyer intent signals) |
+| Sector health data | Manual WebSearch | 16 live data feeds: GDP by industry, employment by county, sector revenue, FRED, BLS JOLTS, commodity prices, shipping rates, news volume, wage trends, Polymarket, and more |
 | Chart data | Manual JSON assembly | Auto-populated from API responses |
 | Client delivery | Local files | One-command publish to shared wiki |
 | Team workflow | Single user | Sync diagnoses across team members |
 | Diagnosis comparison | Manual | `/bear diff` compares any two diagnoses side by side |
 | Weekly pulse | ~15 min (manual lookups) | ~5 min (automated data pulls) |
 
-The methodology is identical. The difference is how long data collection takes and how the output reaches clients. [Learn more at clickmakers.io](https://clickmakers.io)
+The methodology is identical. The difference is data depth and delivery speed. [Learn more at clickmakers.io](https://clickmakers.io)
 
 ## Ecosystem
 

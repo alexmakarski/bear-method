@@ -1,6 +1,6 @@
 ---
 name: bear
-version: 3.12.0
+version: 3.16.0
 description: "BEAR (Buyer Environment Analysis & Repositioning). Diagnoses why business development stopped working by analyzing market shifts, competitive convergence, and buyer environment changes. Covers all symptom types: ad performance decline, close rate collapse, referral source drought, and pipeline stall. Produces a temporal market diagnosis with repositioning recommendations. Use when results changed but the business didn't, or when entering a new market and needing competitive landscape intelligence."
 interface: "invoke: /bear {mode} {client-name}"
 modes: [diagnose, pulse]
@@ -399,7 +399,7 @@ Look up the client's industry tag in the Signal Registry above. Run the listed W
 
 ---
 
-## Phase 2: Shift Diagnosis
+## Phase 2A: Shift Diagnosis
 
 Compare the current market state against the baseline (pre-decline) period and classify what changed. The baseline is reconstructed from historical data (Google Trends history, Wayback Machine, client records, previous reports). A market shift is rarely one thing. Most real shifts are a combination of factors. Identify which are contributing and estimate their relative weight.
 
@@ -513,15 +513,15 @@ The comparison is structured, not a prose summary. Use the What Changed tables f
 
 ---
 
-## Phase 2.5: Evidence Weighing
+## Phase 2B: Evidence Weighing
 
-**Mandatory. Run after Phase 2 and before Phase 3.**
+**Mandatory. Run after Phase 2A and before Phase 2C.**
 
-The diagnosis from Phase 2 is a hypothesis, not a finding. This phase stress-tests it before repositioning recommendations are built on top of it. The goal is not to disprove the diagnosis. The goal is to make sure it can survive scrutiny.
+The diagnosis from Phase 2A is a hypothesis, not a finding. This phase stress-tests it before repositioning recommendations are built on top of it. The goal is not to disprove the diagnosis. The goal is to make sure it can survive scrutiny.
 
 ### Step 1: State the claim
 
-Restate the primary diagnosis from Phase 2 as a single falsifiable claim:
+Restate the primary diagnosis from Phase 2A as a single falsifiable claim:
 
 > "The primary cause of {client}'s decline is {shift category} driven by {specific mechanism}."
 
@@ -575,15 +575,64 @@ After running all four steps, state the verdict:
 - **Confirmed:** The diagnosis holds. Strong evidence on the FOR side, weak or absent counter-evidence, actor analysis supports the primary actor interpretation.
 - **Revised:** The evidence supports a modified version of the diagnosis. State what changed and why.
 - **Inconclusive:** The evidence is genuinely mixed. State what is known, what is uncertain, and what additional data would resolve it.
-- **Rejected:** The disconfirmation search found stronger evidence against the diagnosis than for it. Return to Phase 2 with the new information.
+- **Rejected:** The disconfirmation search found stronger evidence against the diagnosis than for it. Return to Phase 2A with the new information.
 
-Carry the verdict and confidence level into Phase 3. If the verdict is Inconclusive or Rejected, do not proceed to repositioning recommendations until the diagnosis is resolved or explicitly flagged as provisional.
+Carry the verdict and confidence level into Phase 2C. If the verdict is Inconclusive or Rejected, do not proceed to repositioning recommendations until the diagnosis is resolved or explicitly flagged as provisional.
+
+---
+
+## Phase 2C: Market Position Assessment
+
+**Mandatory. Run after Phase 2B, before Phase 3.**
+
+The diagnosis tells you what shifted. The Market Position Assessment tells you what that means strategically. Two questions, four answers.
+
+### Two questions
+
+**1. Is the category growing?** Yes or no.
+
+Start with the leading indicators already collected in Phase 1: demand-side Trends data, supply-side validation, business formation data, and industry signals. These tell you what's happening now.
+
+Then check for trailing confirmation via web research: search for recent GDP-by-industry data (BEA), employment trends by sector (BLS QCEW), and sector revenue reports (Census surveys). These lag by 2 to 6 months but measure actual economic activity, not search interest.
+
+**When leading and trailing indicators agree**, the determination is strong. Both say growing, or both say contracting.
+
+**When they disagree**, re-validate. If Trends says "surging" but government data shows the sector was contracting, the Trends signal is likely supply-side contamination. If Trends says "declining" but the sector is still growing by GDP, the decline may be a keyword shift rather than a category contraction.
+
+The answer is Yes if demand-side indicators are rising and available sector data confirms growth or stability. The answer is No if demand is declining or sector data shows contraction.
+
+**2. Is the client differentiated?** Yes or no.
+
+Use the evidence from Phase 1B (competitive landscape) and Phase 2A (shift diagnosis). The answer is Yes if the client mediates a desire no competitor addresses, or has positioning rooted in something competitors cannot copy (founder expertise, local presence, proprietary methodology, unique history). The answer is No if the client's messaging is interchangeable with 5+ competitors and they compete primarily on price or relationships.
+
+### Four quadrants
+
+| | Category Growing | Category Not Growing |
+|---|---|---|
+| **Differentiated** | **STAR.** The shift is a disruption, not a death sentence. Hold position, adapt to the specific shift, keep investing. The category rewards differentiated players. | **CASH COW.** The differentiation protects margins but the category won't grow. Harvest returns, don't over-invest, and start exploring adjacent growing categories. |
+| **Undifferentiated** | **QUESTION MARK.** The category growth is the only thing keeping this business alive. When growth slows, this becomes a Dog. Differentiate now while the window is open. | **DOG.** No growth, no differentiation. Internal optimization will not fix this. The recommendation must be fundamental: reposition into an adjacent growing category, build differentiation the market doesn't have, or exit. |
+
+### How to produce it
+
+1. **State the category growth determination** with evidence: "Category is [growing / not growing] because [cite data]."
+2. **State the differentiation determination** with evidence: "Client is [differentiated / undifferentiated] because [cite data]."
+3. **Name the quadrant:** Star, Cash Cow, Question Mark, or Dog.
+4. **State the strategic implication in one sentence.** This governs the entire Phase 3 recommendation.
+
+### How this changes the recommendation
+
+| Quadrant | What Phase 3 should recommend |
+|---|---|
+| **Star** | Adapt to the shift. Protect the differentiated position. The category is healthy. |
+| **Cash Cow** | Maintain, don't over-invest. Begin exploring adjacent growth categories. |
+| **Question Mark** | Differentiate aggressively before the growth window closes. |
+| **Dog** | Fundamental change. New category, new offer structure, new positioning. Or exit. |
 
 ---
 
 ## Phase 3: Repositioning Recommendation
 
-Based on the shift diagnosis, recommend how the client should reposition. Different shift types call for different responses.
+Based on the shift diagnosis and the Market Position Assessment, recommend how the client should reposition. The quadrant from Phase 2C determines the type of recommendation. The shift type determines its specific content.
 
 ### Response Framework by Shift Type
 
@@ -869,6 +918,20 @@ The BEAR deliverable is a single document with these sections. Save to:
 
 ---
 
+## Market Position Assessment
+
+**Is the category growing?** {Yes / No}
+{One sentence with evidence.}
+
+**Is the client differentiated?** {Yes / No}
+{One sentence with evidence.}
+
+**Position:** {Star / Cash Cow / Question Mark / Dog}
+
+**What this means:** {One sentence that governs the recommendation that follows.}
+
+---
+
 ## The Repositioning Recommendation
 
 ### The Primary Move
@@ -1073,7 +1136,7 @@ When the user runs `/bear pulse {client-name}`:
 
 ---
 
-*BEAR Pulse v3.12.0 | {Client Name} | {date}*
+*BEAR Pulse v3.16.0 | {Client Name} | {date}*
 ```
 
 ### What the pulse does NOT do
