@@ -89,8 +89,9 @@ The operational version (used internally at [ClickMakers](https://clickmakers.io
 | | Open source | Operational |
 |---|---|---|
 | Methodology | Full | Full |
-| Google Trends | Manual WebSearch | Structured API (SerpAPI) with timeseries data |
-| Macro indicators | Manual WebSearch | Live feeds (FRED, BLS, commodity prices, Polymarket) |
+| Google Trends | Manual WebSearch | Structured API with timeseries data |
+| Competitive landscape | Manual WebSearch | Google Maps, Shopping, Autocomplete APIs |
+| Macro indicators | Manual WebSearch | 13 live data feeds (FRED, BLS JOLTS, commodity prices, Polymarket, shipping rates, news volume, wage trends, and more) |
 | Chart data | Manual JSON assembly | Auto-populated from API responses |
 | Client delivery | Local files | One-command publish to shared wiki |
 | Team workflow | Single user | Sync diagnoses across team members |
