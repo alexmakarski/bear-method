@@ -74,6 +74,6 @@ The methodology you're running is the same one. The operational version just mak
 BEAR is part of a family of diagnostic products:
 
 - **[SEAL](https://github.com/alexmakarski/seal-method)** : Forensic evidence review and strategic analysis
-- **[SONAR](https://github.com/alexmakarski/sonar-method)** : Operational diagnostics and automation readiness
+- **[ORCA](https://github.com/alexmakarski/orca-method)** : Operational diagnostics and capability audit
 - **BEAR** : Market shift diagnosis and repositioning
 - **[SimPanel](https://simpanel.ai)** : Synthetic buyer panel validation

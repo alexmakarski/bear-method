@@ -177,7 +177,7 @@ BEAR is part of a family of open-source diagnostic methods:
 | Method | What it diagnoses | Repo |
 |--------|-------------------|------|
 | **SEAL** | "What's actually true here, verified against evidence?" | [seal-method](https://github.com/alexmakarski/seal-method) |
-| **SONAR** | "Where is the margin going and what's the highest-leverage operational fix?" | [sonar-method](https://github.com/alexmakarski/sonar-method) |
+| **ORCA** | "Where is the margin going and what's the highest-leverage operational fix?" | [orca-method](https://github.com/alexmakarski/orca-method) |
 | **BEAR** | "What changed in your market and what does it mean for your positioning?" | This repo |
 
 These feed into commercial products ([AdGradr](https://adgradr.com), ECHO, [SimPanel](https://simpanel.ai)) but work independently as standalone diagnostic tools.

@@ -15,7 +15,7 @@ BEAR answers: "Your business development stopped working. Here's why, and the ca
 
 It reads market signals, analyzes the client's competitive environment, identifies what shifted, and produces a diagnosis with repositioning recommendations.
 
-BEAR is not an ad grader (that's AdGradr). It's not an operational audit (that's SONAR). It diagnoses the market environment outside the client's business: the forces that changed what buyers want, who they compare you to, and why they say yes or no.
+BEAR is not an ad grader (that's AdGradr). It's not an operational audit (that's ORCA). It diagnoses the market environment outside the client's business: the forces that changed what buyers want, who they compare you to, and why they say yes or no.
 
 ---
 
@@ -1181,7 +1181,7 @@ The pulse should NOT escalate for:
 ### What BEAR does NOT do
 - Score accounts (that's AdGradr)
 - Write new ad copy (that's a creative engagement)
-- Audit operations (that's SONAR)
+- Audit operations (that's ORCA)
 - Verify claims against evidence tiers (that's SEAL)
 - Monitor competitors over time (the `pulse` mode tracks key indicators weekly, but it's a check, not ongoing surveillance)
 
@@ -1228,7 +1228,7 @@ All research files are flat in the run folder. No nesting. Charts stay as a fold
 ```
 clients/{clientname}/
   bear/                                         # BEAR engagements
-  sonar/                                        # SONAR audits
+  orca/                                         # ORCA diagnostics
   adgradr/                                      # Ad account audits
   notes/                                        # Meeting notes, call summaries
   pulses/                                       # Weekly pulses
