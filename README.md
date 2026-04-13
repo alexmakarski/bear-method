@@ -24,9 +24,9 @@ Phase 5:  SimPanel Validation (optional buyer panel testing via simpanel.ai)
 BEAR isn't just for ad performance decline. It handles:
 
 - **Type A: Acquisition decline** (leads dried up, CPAs doubled)
-- **Type B: Close rate collapse** (leads come in but deals don't close)
+- **Type B: Close rate collapse** (prospects evaluate and choose someone else)
 - **Type C: Referral drought** (referral sources went quiet)
-- **Type D: Pipeline stall** (proposals out, nothing moving)
+- **Type D: Pipeline stall** (prospects go silent after receiving a proposal)
 - **Type E: Mixed** (everything slowed down)
 
 ## Six shift categories
