@@ -31,7 +31,7 @@ These features exist in the internal BEAR v4.0.0 but are missing from open sourc
 | BEAR Position Grid | v3.21.0 | Already renamed to the new quadrants. But missing: the measured-axis methodology (Performance Gap formula, Positioning Overlap calculation), government trailing data confirmation, and the grid interpretation per quadrant. Needs full replacement of the old binary questions approach. |
 | Scenario Modeling (Phase 4) | v3.10.0 | Three conditional projections with observable indicators. Already present in open source but may need updates. |
 | Locale awareness | v3.19.0 | Spelling, terminology, currency adapt to target geography. The open-source version should follow the same locale rules. |
-| Chart generation | v3.12.0 | Five chart types. Already present. Add Position Grid as 6th chart type. |
+| Position Grid chart | v3.21.0 | The one chart that stays. Plots the client on the 2x2. Other chart types (timeline, convergence, cost pressure, search-lead-gap) are removed -- the data lives in markdown tables instead. |
 
 ### What to adapt for open source
 
@@ -60,6 +60,7 @@ These features don't belong in open source:
 | **Walk-away automation** | MCP auto-approve, PostToolUse error hook, circuit breaker. Requires MCP infrastructure. |
 | **Outline publishing** | One-command publish to shared wiki. Requires Outline. |
 | **SEAL integration** | Phase 1F evidence package, SEAL grading, tiered recommendations. Internal product integration, not open-source methodology. |
+| **Charts (except Position Grid)** | Timeline, search-lead-gap, convergence map, cost pressure bars, pulse sparklines. Nice polish for client presentations but not essential to the diagnosis. The markdown tables tell the same story. Removes bear-charts.py dependency and Python friction. Keep the Position Grid only -- it's the signature visual. |
 
 ### What to tease but gate
 
@@ -95,7 +96,7 @@ Clean up the version history. The open-source version doesn't need to track ever
    - Phase 4 scenario modeling
    - Phase 5 SimPanel validation (gated)
    - Signal Registry (keep all 14 industry tags, use WebSearch queries)
-   - Chart generation (add position grid)
+   - Position Grid chart only (remove bear-charts.py dependency for other chart types)
    - Deliverable template (updated)
    - Quality standards
 
