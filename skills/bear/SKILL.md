@@ -2,9 +2,9 @@
 name: bear
 version: 4.0.0
 description: "BEAR (Buyer Environment Analysis & Repositioning). Diagnoses why business development stopped working by analyzing market shifts, competitive convergence, and buyer environment changes. Covers all symptom types: ad performance decline, close rate collapse, referral source drought, and pipeline stall. Produces a temporal market diagnosis with repositioning recommendations. Use when results changed but the business didn't, or when entering a new market and needing competitive landscape intelligence."
-interface: "invoke: /bear {mode} {client-name}"
-modes: [diagnose, pulse]
-author: Alex Makarski / Click Makers
+interface: "invoke: /bear diagnose {client-name}"
+modes: [diagnose]
+author: Alex Makarski
 ---
 
 # BEAR: Buyer Environment Analysis & Repositioning
@@ -15,7 +15,7 @@ BEAR answers: "Your business development stopped working. Here's why, and the ca
 
 It reads market signals, analyzes the client's competitive environment, identifies what shifted, and produces a diagnosis with repositioning recommendations.
 
-BEAR is not an ad grader (that's AdGradr). It's not an operational audit (that's ORCA). It diagnoses the market environment outside the client's business: the forces that changed what buyers want, who they compare you to, and why they say yes or no.
+BEAR is not an ad grader. It's not an operational audit. It diagnoses the market environment outside the client's business: the forces that changed what buyers want, who they compare you to, and why they say yes or no.
 
 ---
 
@@ -65,9 +65,6 @@ Multiple symptoms present simultaneously, or the client can't isolate which part
 ### `/bear diagnose {client-name}`
 Full engagement. Captures current market state, reconstructs baseline from historical data, diffs the two, classifies the shift, and produces repositioning recommendations. This is the standard BEAR deliverable. If a prior diagnosis exists locally, produces a What Changed section comparing the two.
 
-### `/bear pulse {client-name}`
-Weekly monitoring check. Lightweight, 5-minute run designed for account managers before client calls. Requires a prior BEAR diagnosis for the client (it pulls keywords, industry tag, and baseline data from the existing engagement folder). See the Pulse Mode section below for full specification.
-
 ---
 
 ## Inputs Required
@@ -79,7 +76,7 @@ Collect from the user before starting:
 2. **Market/vertical** (e.g., "window coverings in a major metro", "B2B SaaS for HR teams")
 3. **Industry tag**: select from the Signal Registry below. This determines which additional data sources to pull in Phase 1E. If the client doesn't fit a predefined tag, use `general` and rely on the baseline signals only. Ask the user to confirm or correct the tag.
 4. **5-10 target keywords** the client competes on (paid or organic; these drive the Trends and competitive research)
-5. **Target geography** (city, state/province, country)
+5. **Target geography** (city, state/province, country). This also sets the **locale** for the entire engagement: spelling, terminology, currency, and data sources. See the Locale rule in Quality Standards.
 6. **Symptom description**: classify into Type A-E from the Symptom Taxonomy above. Ask:
    - What specifically changed? (leads down? close rate down? referrals stopped? pipeline frozen?)
    - When did it start?
@@ -100,7 +97,7 @@ Collect from the user before starting:
 ### Nice to have
 11. **Historical positioning** (what they said/pitched before the decline)
 12. **Industry context** (anything the client suspects changed: new competitors, regulation, platform updates)
-13. **Previous AdGradr or ECHO reports** (if they exist)
+13. **Previous audit reports** (if they exist)
 14. **Sales conversation notes** (for Type B/D: what are buyers saying when they stall or say no? what objections changed?)
 
 ---
@@ -126,6 +123,12 @@ When symptoms suggest a supply flood (provider count growing, price resistance a
 | Industry layoffs | How many workers were laid off in the sector recently | WebSearch: "BLS JOLTS {industry} layoffs {year}" or visit bls.gov JOLTS data | Validates whether workforce displacement is real and quantified |
 | Job openings vs. workers | How many jobs are available vs. how many workers exist | WebSearch: "BLS JOLTS {industry} job openings {year}" | Low openings + high layoffs = workers becoming freelancers |
 | New business formation | How many new businesses were formed in the sector | WebSearch: "Census business formation {industry} {year}" or visit census.gov BFS data | A surge here is the leading indicator of competitive flood, 6-12 months ahead |
+
+**For Canadian clients:**
+WebSearch for StatCan labour force data by industry and business openings/closures by sector. Search: "StatCan employment by industry {sector} {year}", "StatCan business openings closures {sector} {year}".
+
+**For Australian clients:**
+WebSearch for ABS labour force data by industry and ASIC new business registrations. Search: "ABS labour force {industry} {year}", "ASIC new company registrations {year}".
 
 **The Category Dissolution pattern in data:** BLS JOLTS layoffs surging + Census business formation applications surging in the same sector = the supply flood is confirmed with hard numbers, not just anecdote. These two data points together make the diagnosis defensible.
 
@@ -175,7 +178,6 @@ When symptoms suggest a supply flood (provider count growing, price resistance a
        bear{YYYYMMDD}/
          charts/
          from-client/
-     pulses/                                    # Only create if it doesn't exist yet
    ```
 
 3. **Write a placement guide** to `from-client/PLACE-FILES-HERE.md`:
@@ -211,9 +213,7 @@ When symptoms suggest a supply flood (provider count growing, price resistance a
    - Recent proposal examples
 
    **Previous reports**
-   - AdGradr reports
-   - ECHO reports
-   - Any third-party audits
+   - Any third-party audits or reports
 
    ## File naming
 
@@ -231,10 +231,6 @@ When symptoms suggest a supply flood (provider count growing, price resistance a
    > Ready to begin research? (y/n)
 
    If the user says yes, proceed to Phase 1. If they need time to gather files, wait. Research can also start in parallel while files are being placed.
-
-### For pulse mode
-
-Pulse mode does not create a new run folder. It reads from the most recent diagnosis folder and writes to `pulses/`. If `pulses/` doesn't exist, create it before writing the pulse output.
 
 ---
 
@@ -331,10 +327,10 @@ For each competitor (5-15):
 
 The 5-15 profiled competitors are the visible tip of the competitive landscape. In many markets, the real competitive pressure comes from providers you can't profile individually because there are thousands of them. Assess:
 
-- **Provider count.** Search for total number of businesses in the client's vertical (IBISWorld, Statista, industry reports). Is the provider count growing or shrinking? A market with 100,000+ providers growing 16%/year is a fundamentally different competitive environment than 500 stable competitors.
-- **Freelancer/solo competition.** Search for the client's service type on Upwork, Fiverr, and curated platforms (MarketerHire, Mayple, etc.). What are freelancers charging for equivalent work? This establishes the price floor the client competes against, whether they know it or not.
-- **AI tool substitutes.** Search for AI tools that claim to replace the client's service (e.g., "AI {service type}", "AI {vertical} tool"). What do they cost? Even if they don't fully work yet, their pricing sets the buyer's price anchor.
-- **Workforce redistribution.** Check for recent layoffs in the client's industry vertical. If large companies are shedding workers (holding company restructuring, tech layoffs), those workers become freelancers and micro-agencies. Search: "{vertical} layoffs {year}", "{vertical} industry job cuts".
+- **Provider count.** WebSearch for total number of businesses in the client's vertical (IBISWorld, Statista, industry reports). Is the provider count growing or shrinking? A market with 100,000+ providers growing 16%/year is a fundamentally different competitive environment than 500 stable competitors.
+- **Freelancer/solo competition.** WebSearch for the client's service type on Upwork, Fiverr, and curated platforms (MarketerHire, Mayple, etc.). What are freelancers charging for equivalent work? This establishes the price floor the client competes against, whether they know it or not.
+- **AI tool substitutes.** WebSearch for AI tools that claim to replace the client's service (e.g., "AI {service type}", "AI {vertical} tool"). What do they cost? Even if they don't fully work yet, their pricing sets the buyer's price anchor.
+- **Workforce redistribution.** Check for recent layoffs in the client's industry vertical. If large companies are shedding workers (holding company restructuring, tech layoffs), those workers become freelancers and micro-agencies. WebSearch: "{vertical} layoffs {year}", "{vertical} industry job cuts".
 
 Capture in a market structure summary:
 
@@ -361,11 +357,28 @@ Capture in a market structure summary:
 
 ### 1C. Economic and Platform Context
 
-**Do as much as available data allows.**
+**Do as much as available data allows.** Pull macro data from the correct country source via WebSearch.
 
-- Search for industry-specific news in the client's vertical (last 6-12 months)
+**For US clients:**
+- WebSearch: "FRED consumer sentiment index current", "FRED housing starts current", "FRED unemployment rate current"
+- WebSearch for commodity prices relevant to the vertical: "{commodity} price current"
+
+**For Canadian clients:**
+- WebSearch: "Bank of Canada overnight rate current"
+- WebSearch: "USD CAD exchange rate" (import cost pressure)
+- WebSearch: "StatCan housing starts {year}" for housing/construction verticals
+- WebSearch for commodity prices: "{commodity} price current"
+
+**For Australian clients:**
+- WebSearch: "RBA cash rate current"
+- WebSearch: "ABS building approvals latest" for housing/construction verticals
+- WebSearch for commodity prices: "{commodity} price current"
+
+**All geographies:**
+- WebSearch for industry-specific news in the client's vertical (last 6-12 months)
+- WebSearch for container shipping rates if the client's supply chain involves imports
+- WebSearch for prediction market probabilities on relevant economic/political events: "Polymarket {event}"
 - Check for Google Ads platform changes that affected the vertical (auction changes, AI features, policy updates)
-- Check for economic indicators relevant to the vertical (if B2C: consumer confidence, housing starts, employment. If B2B: industry growth, funding trends, hiring trends)
 - Check for regulatory or policy changes affecting the vertical
 - Check for geopolitical or macro events affecting buyer psychology (tariffs, trade policy, AI disruption anxiety, etc.)
 
@@ -585,7 +598,7 @@ Carry the verdict and confidence level into Phase 2C. If the verdict is Inconclu
 
 **Mandatory. Run after Phase 2B, before Phase 3.**
 
-The diagnosis tells you what shifted. The BEAR Position Grid tells you what that means strategically. Two measured axes, four quadrants.
+The diagnosis tells you what shifted. The Position Grid tells you what that means strategically. Two measured axes, four quadrants.
 
 ### Two axes
 
@@ -598,7 +611,27 @@ Formula: `client performance change % - market demand change %`
 - **Client performance change:** from the client's own data (lead volume, close rate, revenue, whatever metric best matches their symptom type). Use the same time period as the market measurement.
 - **Market demand change:** from the validated demand-side Google Trends queries collected in Phase 1A (after supply-side filtering). Confirm with government trailing data where available via web research (search for recent GDP-by-industry data, employment trends by sector, sector revenue reports).
 
-**When Trends and government data disagree**, re-validate. If Trends says "surging" but sector data shows contraction, the Trends signal is likely supply-side contamination. If Trends says "declining" but the sector is still growing by GDP, the decline may be a keyword shift rather than a category contraction.
+**Government trailing data for market demand confirmation:**
+
+Pull trailing confirmation from government sources to validate the Trends-based demand measurement. These lag by 2 to 6 months but measure actual economic activity, not search interest.
+
+**For US clients:**
+- WebSearch: "BEA GDP by industry {sector} latest quarter" for quarterly GDP growth/contraction.
+- WebSearch: "BLS QCEW {industry} {area} latest" for quarterly employment and wages.
+- WebSearch: "Census sector revenue {industry} latest" for monthly or quarterly sector revenue.
+
+**For Canadian clients:**
+- WebSearch: "StatCan GDP by industry monthly latest" for GDP by industry.
+- WebSearch: "StatCan Labour Force Survey {industry} latest" for employment by industry.
+- WebSearch: "StatCan retail trade latest" for retail trade data.
+
+**For Australian clients:**
+- WebSearch: "ABS National Accounts GDP quarterly latest" for GDP.
+- WebSearch: "ABS Labour Force {industry} latest" for employment by industry.
+- WebSearch: "ABS retail business turnover monthly latest" for retail turnover.
+- WebSearch: "ABS building approvals latest" for construction verticals.
+
+**When Trends and government data disagree**, re-validate. If Trends says "surging" but GDP and sector revenue show contraction, the Trends signal is likely supply-side contamination. If Trends says "declining" but government data shows the sector still growing, the decline may be a keyword shift rather than a category contraction. Note the discrepancy in the deliverable.
 
 Examples:
 - Market demand down 10%, client leads down 40%. Gap = -30%. Deep left.
@@ -636,9 +669,14 @@ Midpoint: **50%.** Below = differentiated. Above = converged.
 
 ### How to produce it
 
-1. **Calculate the Performance Gap** with evidence: cite the client metric, the market metric, and the gap.
-2. **Calculate the Positioning Overlap** with evidence: cite the competitor count and angle analysis.
+Do not guess. Build it from the data already collected:
+
+1. **Calculate the Performance Gap.** State both numbers and the formula: "Market demand changed {X}% (source: demand-side Trends, confirmed by {government source}). Client {metric} changed {Y}%. Performance gap: {Y - X}%."
+
+2. **Calculate the Positioning Overlap.** State the count: "{N} of {total} profiled competitors share the client's primary messaging angle ({angle name}). Overlap: {N/total as %}."
+
 3. **Plot and name the quadrant:** Grizzly, Roaming, Hibernating, or Bear Trap.
+
 4. **State the strategic implication in one sentence.** This governs the entire Phase 3 recommendation. Example: "This is a Bear Trap. The client is underperforming a declining market by 30 points and their messaging is indistinguishable from 75% of competitors. The recommendation must address fundamental repositioning, not incremental improvement."
 
 ### How this changes the recommendation
@@ -732,7 +770,7 @@ After completing the repositioning recommendation, build three forward-looking s
    - For Google Trends values: use the same WebSearch approach from Phase 1A
    - For any other indicators: WebSearch for the specific data point and source
 
-   > **Note:** The [operational version](https://clickmakers.io) pulls all of these via MCP tools in a single pass: FRED indicators, BLS labor data, commodity prices, Polymarket probabilities, and Census business formation stats. Same indicators, structured JSON instead of manual lookups.
+   > **Note:** The [operational version](https://clickmakers.io) pulls all of these via API in a single pass: FRED indicators, BLS labor data, commodity prices, Polymarket probabilities, and Census business formation stats. Same indicators, structured JSON instead of manual lookups.
 
 3. **Define three scenarios** based on how those indicators could move:
    - **Scenario A (Quick Recovery):** The favorable case. Key indicators improve. Define the specific thresholds (e.g., "confidence above 70").
@@ -743,7 +781,7 @@ After completing the repositioning recommendation, build three forward-looking s
    - "Victoria search interest dropped 35% and your leads dropped 60%. If search recovers to 80% of baseline, leads should recover to roughly 35-40/month, assuming the conversion gap partially closes."
    - Never present projections as precise numbers. Use ranges.
 
-5. **Assess probability** for each scenario. Use Polymarket data if available (search for relevant prediction markets). Otherwise, use the current indicator trajectory:
+5. **Assess probability** for each scenario. Use Polymarket data if available (WebSearch for relevant prediction markets). Otherwise, use the current indicator trajectory:
    - All indicators moving in the recovery direction = Quick Recovery is medium-high probability
    - Mixed signals = Slow Grind is most likely
    - Indicators still deteriorating = Extended Crisis is the concern
@@ -752,7 +790,6 @@ After completing the repositioning recommendation, build three forward-looking s
 
 - **Every scenario must be tied to observable indicators.** "Things get better" is not a scenario. "Consumer confidence recovers above 70 and aluminium drops below $3,000/t" is a scenario.
 - **Never predict timelines.** Say "IF this happens" not "WHEN this happens."
-- **Update scenarios in the weekly pulse.** As indicators move, the probability assessment shifts. The pulse should note which scenario the client is currently tracking toward.
 - **Be honest about uncertainty.** If you can't reasonably project a metric, say so. "Close rate projection uncertain, insufficient data to correlate with macro indicators" is better than a made-up number.
 - **Projections are ranges, not points.** "20-30 leads/month" not "25 leads/month."
 
@@ -761,6 +798,8 @@ After completing the repositioning recommendation, build three forward-looking s
 ## Phase 5: SimPanel Validation (Optional, Human-Gated)
 
 After completing the repositioning recommendation, optionally validate the proposed messaging against synthetic buyer panels via SimPanel (simpanel.ai).
+
+**Requires SimPanel MCP server. See [simpanel.ai](https://simpanel.ai) for access.**
 
 **This phase is human-gated.** Do not run it automatically. Ask the strategist whether they want to validate the repositioning recommendation before presenting it to the client.
 
@@ -820,50 +859,47 @@ After completing the repositioning recommendation, optionally validate the propo
 
 ## Chart Generation
 
-After completing the diagnosis, generate visual charts to embed in the deliverable. Charts are produced by `tools/bear-charts.py` which reads JSON input and outputs PNGs.
+After completing the diagnosis, generate the BEAR Position Grid chart to embed in the deliverable. The chart is produced by `tools/position-grid.py` which reads JSON input and outputs a PNG.
 
-### When to generate charts
+### When to generate
 
-Generate charts at the END of the diagnosis, after all research is complete and findings are written. The chart data comes from your findings, not the other way around.
+Generate the chart at the END of the diagnosis, after all research is complete and findings are written. The chart data comes from your findings, not the other way around.
 
-### Available chart types
+### Position Grid chart
 
 | Chart | Command | When to use | Embed in section |
 |---|---|---|---|
-| Confidence/indicator timeline | `python3 tools/bear-charts.py timeline data.json output.png` | External shock diagnosis with temporal data | The Evidence > Economic Context |
-| Search vs lead gap | `python3 tools/bear-charts.py search-lead-gap data.json output.png` | Any acquisition decline (Type A) or combined (A+B) | The Evidence > Demand Signals |
-| Competitive convergence map | `python3 tools/bear-charts.py convergence data.json output.png` | Any engagement with 5+ competitors profiled | The Evidence > Competitive Landscape |
-| Cost pressure bars | `python3 tools/bear-charts.py cost-pressure data.json output.png` | When input costs or economic factors changed significantly | The Evidence > Economic Context |
-| Pulse sparklines | `python3 tools/bear-charts.py sparkline data.json output.png` | Weekly pulse reports only | Pulse output |
+| Position Grid | `python3 tools/position-grid.py data.json output.png` | Every diagnosis (plots client on the Grizzly/Roaming/Hibernating/Bear Trap 2x2) | BEAR Position Grid |
 
 ### How to generate
 
-1. Create a JSON file with the chart data (schema documented in `tools/bear-charts.py` docstrings for each chart type).
-2. Run the command. Output is a PNG at 150 DPI.
+1. Create a JSON file with the chart data:
+   ```json
+   {
+     "title": "BEAR Position Grid",
+     "subtitle": "Acme Roofing, April 2026",
+     "client_name": "Acme Roofing",
+     "performance_gap": -30,
+     "positioning_overlap": 75,
+     "quadrant": "Bear Trap"
+   }
+   ```
+2. Run: `python3 tools/position-grid.py data.json output.png`. Output is a PNG at 150 DPI.
 3. Save the JSON and PNG to `{engagement-folder}/charts/`.
-4. Reference the PNG in the deliverable markdown: `![Chart Title](charts/filename.png)`
+4. Reference the PNG in the deliverable markdown: `![BEAR Position Grid](charts/position-grid-{date}.png)`
 
 ### Chart data rules
 
 - Use real numbers from the research, not estimates or averages of averages.
-- Timeline charts need actual dates, not period labels.
-- Convergence charts need all profiled competitors, not just the interesting ones.
-- Cost pressure charts should only include factors where the change is material (>5%).
-- Every chart must have a title and subtitle that makes it self-explanatory without reading the surrounding text.
+- The chart must have a title and subtitle that makes it self-explanatory without reading the surrounding text.
 
 ### File structure
 
 ```
 clients/{clientname}/bear/bear{YYYYMMDD}/
   charts/
-    timeline-confidence.json             # Input data
-    timeline-confidence.png              # Generated chart
-    search-lead-gap-{date}.json
-    search-lead-gap-{date}.png
-    convergence-{date}.json
-    convergence-{date}.png
-    cost-pressure-{date}.json
-    cost-pressure-{date}.png
+    position-grid-{date}.json          # Input data
+    position-grid-{date}.png           # Generated chart
 ```
 
 ---
@@ -916,24 +952,11 @@ The BEAR deliverable is a single document with these sections. Save to:
 ### Demand Signals
 {Google Trends data, keyword interest changes, rising/declining queries.}
 
-![Search vs Lead Gap](charts/search-lead-gap-{date}.png)
-{If Type A or A+B, include the search-lead-gap chart here. Remove this line if not applicable.}
-
 ### Competitive Landscape
 {Competitor positioning table. Convergence analysis. What changed in the competitive field.}
 
-{CHART GOES HERE - after the competitor table, before the convergence analysis prose. Blank line above, blank line below. Never inside a table row.}
-
-![Competitive Convergence Map](charts/convergence-{date}.png)
-
-{Include convergence chart if 5+ competitors were profiled. Remove this line and the chart line above if not applicable.}
-
 ### Economic and Platform Context
 {Relevant macro factors, platform changes, regulatory shifts.}
-
-![Consumer Confidence Timeline](charts/timeline-confidence-{date}.png)
-![Cost Pressure Summary](charts/cost-pressure-{date}.png)
-{Include timeline and/or cost pressure charts if external shock or cost factors are significant. Remove lines that don't apply.}
 
 ### Client Position
 {Where the client sits relative to the field. Performance data over time.}
@@ -947,6 +970,8 @@ Client {metric} changed {Y}% over {period}. Market demand changed {Z}% (source: 
 
 **Positioning Overlap:** {N}%
 {N} of {total} profiled competitors share the client's primary messaging angle ({angle name}).
+
+![BEAR Position Grid](charts/position-grid-{date}.png)
 
 **Position:** {Grizzly / Roaming / Hibernating / Bear Trap}
 
@@ -1064,135 +1089,23 @@ Client {metric} changed {Y}% over {period}. Market demand changed {Z}% (source: 
 
 ### How to Read This Section
 
-These are not predictions. Nobody can predict when a war ends or when rates peak. Each scenario is conditional: "IF these indicators move this way, THEN expect these business outcomes." Watch the indicators in the weekly pulse. When they move, you'll know which scenario you're tracking toward.
+These are not predictions. Nobody can predict when a war ends or when rates peak. Each scenario is conditional: "IF these indicators move this way, THEN expect these business outcomes." Watch the indicators. When they move, you'll know which scenario you're tracking toward.
 
 ```
-
----
-
-## Pulse Mode
-
-### What it is
-
-A weekly monitoring check that account managers run before client calls. Not a diagnosis. Just "what moved since last time" for the indicators that matter to this client.
-
-**Time:** ~5 minutes
-**Prerequisite:** A prior BEAR diagnosis must exist for this client. The pulse pulls its configuration from the existing engagement folder.
-
-### How it works
-
-When the user runs `/bear pulse {client-name}`:
-
-1. **Load the engagement context.** Read the most recent BEAR diagnosis from the client's bear folder. Extract:
-   - Keywords (from the diagnosis metadata)
-   - Industry tag (from the diagnosis metadata)
-   - Geography (from the diagnosis metadata)
-   - Last pulse date (from the most recent pulse file, if any)
-   - Key findings from the diagnosis (what shifted, what to watch)
-
-2. **Pull current signals.** Run these checks in parallel where possible:
-
-   **a. Google Trends (WebSearch), always run:**
-   For the client's top 3-5 keywords (not all 10, keep it fast), search for current trend data.
-   Search: `Google Trends "{keyword}" {geo} {current month} {year}` for each keyword.
-   Compare to the values from the last diagnosis or pulse. Flag: rising, declining, stable, or volatile.
-
-   **b. Industry-specific signals (from Signal Registry), run if tag is not `general`:**
-   Run 2-3 of the most relevant WebSearch queries for the client's industry tag. Focus on the signals that were flagged as significant in the original diagnosis.
-   - Don't run ALL registry queries every week. Only the ones that matter for THIS client based on the diagnosis findings.
-   - Example: if a window coverings client's diagnosis flagged aluminium prices and consumer confidence, the pulse checks those two, not all shutters_blinds signals.
-
-   **c. Quick news scan, always run:**
-   WebSearch for `"{client vertical}" {geo} news {this week}` to catch anything the account manager should know about. One search, scan the top 5 results, flag anything relevant.
-
-   > **Note:** The [operational version](https://clickmakers.io) automates all pulse data pulls via API, cutting pulse time from ~15 minutes to ~5 minutes. It also supports syncing diagnoses between team members so anyone can pulse any client.
-
-3. **Generate the pulse output.** Write to:
-   `clients/{clientname}/pulses/pulse{YYYYMMDD}.md`
-
-### Pulse output template
-
-```markdown
-# BEAR Pulse: {Client Name}
-**Date:** {date}
-**Previous pulse:** {date of last pulse, or "First pulse (baseline from diagnosis {date})"}
-**Prepared for:** {account manager name, if known}
-
----
-
-## Demand Signals
-
-| Keyword | Last check | Now | Direction |
-|---------|-----------|-----|-----------|
-| kw1     | 65        | 58  | declining |
-| kw2     | 42        | 44  | stable    |
-| kw3     | 31        | 27  | declining |
-
-**Summary:** {One sentence. "Search interest continues to decline across primary keywords" or "Stabilizing after March decline" or "No significant change."}
-
-## Industry Signals
-
-| Signal | Last check | Now | Change |
-|--------|-----------|-----|--------|
-| e.g., Aluminium (LME) | $3,585/t | $3,420/t | easing (-4.6%) |
-| e.g., Consumer confidence | 58.8 | 61.2 | recovering (+4.1%) |
-
-**Summary:** {One sentence on net direction of industry-specific indicators.}
-
-## News & Events
-
-{Bullet list of 0-3 relevant items from the news scan. If nothing relevant, say "No significant market news this week."}
-
-- {headline}: {one-line relevance to client}
-- {headline}: {one-line relevance to client}
-
-## Recommendation
-
-{One of these three verdicts:}
-
-**STAY COURSE.** No significant changes. Current strategy remains appropriate.
-
-**FLAG WITH CLIENT.** {Specific thing to mention}. Recommended talking point: "{suggested language}".
-
-**ESCALATE.** {Significant shift detected}. Consider running a full BEAR refresh. {Brief explanation of what changed.}
-
----
-
-*BEAR Pulse v3.16.0 | {Client Name} | {date}*
-```
-
-### What the pulse does NOT do
-
-- **No competitive research.** Checking 12 competitor websites weekly is not a 5-minute task. Save competitive analysis for the quarterly full refresh.
-- **No repositioning recommendations.** The pulse detects movement. Repositioning requires a full diagnosis.
-- **No deep research.** Pulses are lightweight checks, not full market analyses.
-- **No lengthy analysis.** The pulse is a page, not a report. If it takes more than a page to explain what changed, it's time for a full BEAR refresh, not a longer pulse.
-
-### Pulse vs. full refresh cadence
-
-| Check type | Who runs it | Frequency | Output | Time |
-|---|---|---|---|---|
-| Pulse | Account manager | Weekly (before client call) | 1-page pulse note | ~5 min |
-| Full BEAR refresh | Strategist | Quarterly, or when pulse escalates | Full diagnosis update | ~2 hrs |
-
-### Escalation triggers
-
-The pulse should recommend ESCALATE when:
-- Google Trends show a sustained directional change (3+ weeks in the same direction) of more than 20% from the diagnosis baseline
-- A major industry signal moved significantly (commodity price swing >15%, policy/regulation change, major competitor action)
-- News scan surfaces something that could change the diagnosis (new entrant, regulatory action, macro shock)
-
-The pulse should NOT escalate for:
-- Normal weekly volatility in search interest (5-10% swings are noise)
-- News that's interesting but doesn't affect the client's specific market
-- Gradual trends that were already identified in the diagnosis (those are expected, not escalation-worthy)
 
 ---
 
 ## Quality Standards
 
 ### Writing standards
-- **Never use em-dashes, en-dashes, or double dashes (--) in any output.** Rephrase the sentence instead. Use colons, semicolons, commas, periods, or parentheses. If a sentence needs a dash to work, rewrite the sentence. This applies to the diagnosis, research files, pulse reports, and all generated content.
+- **Never use em-dashes, en-dashes, or double dashes (--) in any output.** Rephrase the sentence instead. Use colons, semicolons, commas, periods, or parentheses. If a sentence needs a dash to work, rewrite the sentence. This applies to the diagnosis, research files, and all generated content.
+
+### Locale rule
+- **All output must use the client's regional English.** The target geography from the inputs determines the locale for the entire engagement: spelling, terminology, currency, and units. This applies to the diagnosis, research files, chart labels, and all generated content. Apply consistently throughout; do not mix locales.
+  - **US clients:** American English. aluminum, color, labor, analyze, defense. Currency in USD ($).
+  - **Canadian clients:** Canadian English (British-leaning). aluminium, colour, labour, analyse, defence. Currency in CAD ($) with "CAD" qualifier where USD amounts also appear.
+  - **Australian clients:** Australian English (British-leaning). aluminium, colour, labour, analyse, defence. Currency in AUD ($) with "AUD" qualifier where USD amounts also appear.
+  - **When quoting data sources** that use a different locale (e.g., a US government report in an AU engagement), keep the original source's spelling in the citation but use the client's locale in your analysis text.
 
 ### Evidence requirements
 - Every diagnostic claim must cite a specific data source
@@ -1201,11 +1114,10 @@ The pulse should NOT escalate for:
 - Google Trends data must include specific numbers or directional data, not vague "interest is declining"
 
 ### What BEAR does NOT do
-- Score accounts (that's AdGradr)
+- Score accounts (that's an ad grader)
 - Write new ad copy (that's a creative engagement)
-- Audit operations (that's ORCA)
-- Verify claims against evidence tiers (that's SEAL)
-- Monitor competitors over time (the `pulse` mode tracks key indicators weekly, but it's a check, not ongoing surveillance)
+- Audit operations (that's an operational diagnostic)
+- Monitor competitors over time (BEAR is a point-in-time diagnosis, not ongoing surveillance)
 
 ### Confidence protocol
 - **HIGH CONFIDENCE**: 3+ independent data sources confirm the finding. State it directly.
@@ -1218,8 +1130,6 @@ The pulse should NOT escalate for:
 All client work lives under `clients/{clientname}/` in the working directory. BEAR files go in `clients/{clientname}/bear/`.
 
 **Run folder naming:** Each full run gets its own folder named `bear{YYYYMMDD}`. If a second run happens the same day, append a letter: `bear{YYYYMMDD}a`, then `b`, etc. Check if the folder exists before creating it.
-
-**Pulses** live at the client level, not inside a run folder, since they're ongoing and not tied to a specific diagnosis.
 
 ```
 clients/{clientname}/
@@ -1239,60 +1149,28 @@ clients/{clientname}/
       google-trends.md
       economic-context.md
       charts/
-  pulses/                                       # Weekly pulse outputs (client level)
-    pulse20260414.md
-    pulse20260421.md
 ```
 
 All research files are flat in the run folder. No nesting. Charts stay as a folder because there are multiple PNGs plus JSON inputs. `from-client/` holds anything the client provided (ad exports, screenshots, CSVs, PDFs).
-
-**Other products** for the same client live alongside:
-```
-clients/{clientname}/
-  bear/                                         # BEAR engagements
-  orca/                                         # ORCA diagnostics
-  adgradr/                                      # Ad account audits
-  notes/                                        # Meeting notes, call summaries
-  pulses/                                       # Weekly pulses
-```
 
 ---
 
 ## Integration Points
 
-### With AdGradr (when available)
-- Pull the client's top keywords by spend/impressions from their AdGradr audit
-- Pull CPA/ROAS/CPC trends from the audit data
-- Use auction insights data for competitor identification
-- BEAR diagnosis can be linked from the AdGradr report as "why your numbers changed"
-
-### With ECHO (when built)
-- ECHO provides real-time competitive ad messaging for the client's keywords
-- ECHO corpus provides historical competitive messaging for temporal comparison
-- BEAR can trigger an ECHO pull as part of Phase 1B competitive research
-
 ### Standalone (always works)
-- BEAR works without AdGradr or ECHO
-- All data can be gathered via web research and client-provided exports
-- This is the mode for first engagements and for clients who haven't run AdGradr
+- BEAR works as a standalone diagnostic tool
+- All data can be gathered via WebSearch and client-provided exports
+- No external tool dependencies required
+
+### With other diagnostic methods
+- BEAR diagnoses the market environment. Operational audits diagnose internal processes. Evidence verification methods validate claims. These are complementary, not dependent.
 
 ---
 
 ## Version History
 
-- **1.0.0** (2026-04-06): Initial build. Self-contained market shift diagnosis skill. Four phases: signal collection, snapshot capture, shift diagnosis, repositioning. Five shift categories. Structured deliverable template. No external skill dependencies.
-- **1.1.0** (2026-04-06): Added Symptom Taxonomy (Types A-E). BEAR now handles close rate collapse, referral drought, and pipeline stall, not just ad performance decline. Inputs section updated with symptom-specific performance data requirements and sales conversation notes. Signal collection priorities now vary by symptom type.
-- **1.2.0** (2026-04-06): Integrated Girardian analysis natively. Competitive research now includes desire mediation mapping, model identification, suppressed desire detection, and direction-of-imitation tracking. Shift categories deepened with mimetic theory. Anti-mimetic repositioning framework added.
-- **1.3.0** (2026-04-06): Replaced vague "use WebSearch for Trends" with proper Google Trends research protocol. WebFetch URLs with geo-targeting and date parameters, multi-keyword comparison URLs, SerpAPI integration path, structured capture table, fallback chain when Trends blocks. Snapshot schema enriched with category-vs-niche divergence and geographic shift tracking. Competitive research now includes desire mediation mapping, model identification, suppressed desire detection, and direction-of-imitation tracking. Shift categories deepened: Competitive Convergence reframed as Mimetic Crisis, Demand Shift as Desire Migration, Model Disruption as New Mediator. Repositioning framework upgraded with anti-mimetic strategy (imitation trap test, suppressed desire territory, defensibility analysis). All Girardian concepts are our own implementation from public theory, no external skill dependencies.
-- **1.4.0** (2026-04-07): SerpAPI is now the primary and only method for Google Trends data (closed source). Open source uses WebSearch fallback.
+- **1.0.0** (2026-04-06): Initial build. Self-contained market shift diagnosis skill. Four phases: signal collection, snapshot capture, shift diagnosis, repositioning. Five shift categories. Structured deliverable template.
 - **2.0.0** (2026-04-07): Forked into open source (methodology) and closed source (operational tooling). Open source uses WebSearch for all data collection.
-- **2.1.0** (2026-04-07): Added Signal Registry and Phase 1E (Industry-Specific Signals). 14 industry tags with pre-mapped data sources and search queries. Industry tag added as required input. Phase 1 expanded from 4 steps (A-D) to 5 (A-E).
-- **2.2.0** (2026-04-07): Added Pulse mode (`/bear pulse {client-name}`). Weekly monitoring check for account managers. Pulls top keywords, checks industry signals from registry, scans news. Outputs a 1-page pulse note with STAY COURSE / FLAG WITH CLIENT / ESCALATE verdict. Requires prior diagnosis. Folder structure updated with `pulses/` directory.
-- **2.3.0** (2026-04-07): Added chart generation (tools/bear-charts.py). Five chart types: confidence timeline, search-vs-lead gap, competitive convergence map, cost pressure bars, pulse sparklines. Charts generated as PNGs from JSON input, embedded in deliverable. Deliverable template updated with chart placement. Folder structure updated with `charts/` directory.
-- **2.4.0** (2026-04-07): Added macro data collection via WebSearch (FRED indicators, Polymarket predictions, commodity prices). Phase 4 scenario modeling now pulls live indicator values via web research.
-- **3.0.0** (2026-04-07): Roadmap complete. Added Phase 5 (Scenario Modeling) with three-scenario conditional projections tied to observable indicators, Polymarket probability integration, and scenario rules. Added Phase 6 (SimPanel Validation) with human-gated workflow, BEAR signal summary format, and buyer validation deliverable section. Deliverable template updated with Scenario Outlook and Buyer Validation sections.
-- **3.1.0** (2026-04-08): Restructured file storage. Client work now lives under `clients/{clientname}/`. Each BEAR run gets its own folder: `bear{YYYYMMDD}`, with letter suffix for same-day reruns. Pulses moved to client level. Removed all double dashes (40 instances). Metadata block switched to table format.
-- **3.2.0** (2026-04-08): Removed snapshot mode and snapshot files. Snapshots were redundant with the diagnosis and research files. Flattened folder structure: all research files live flat in the run folder (no research/competitors/ nesting). Removed snapshot/compare modes (diagnose and pulse remain). Renumbered phases (1: Signal Collection, 2: Shift Diagnosis, 3: Repositioning, 4: Scenario Modeling, 5: SimPanel Validation). Client-provided files go in `from-client/` subfolder.
-- **3.3.0** (2026-04-08): Added Phase 0 (Workspace Setup). Creates the full folder structure and a `from-client/PLACE-FILES-HERE.md` placement guide before any research begins, so the user can drop data files while research runs in parallel.
-- **3.4.0** (2026-04-08): Three structural additions from a PPC agency engagement. (1) **Supply-side validation** added to Phase 1A: Google Trends data must now be cross-checked with supply-side queries ("learn X", "X course", "X certification") and explicitly demand-side queries ("hire X") before being presented as demand signal. If supply-side queries surge at the same rate, flag the Trends data as unreliable. (2) **Invisible competitor assessment** added to Phase 1B: beyond profiling 15 visible competitors, now checks provider count (IBISWorld), freelancer price floors (Upwork/Fiverr), AI tool price anchors, and workforce displacement events. (3) **Category Dissolution** added as sixth shift category in Phase 2, with full diagnostic criteria and response framework in Phase 3. Category Dissolution diagnoses when the service category itself is losing viability (supply glut + price anchor collapse + buyer migration to adjacent categories). The response is to escape the category, not reposition within it. All three additions originated from a v1 diagnosis that missed these dynamics and was corrected by founder market intelligence.
-- **3.12.0** (2026-04-08): Open source sync with closed source v3.12.0. All methodology, shift categories, evidence weighing, repositioning frameworks, scenario modeling, and SimPanel validation current. Data collection uses WebSearch throughout. No proprietary API dependencies.
+- **3.0.0** (2026-04-07): Added Phase 5 (Scenario Modeling) with three-scenario conditional projections, Phase 6 (SimPanel Validation) with human-gated workflow. Added Signal Registry with 14 industry tags. Added Pulse mode for weekly monitoring.
+- **3.12.0** (2026-04-08): Full methodology sync. All shift categories, evidence weighing, repositioning frameworks, scenario modeling, and SimPanel validation current.
+- **4.0.0** (2026-04-13): Full methodology sync with internal v4.0.0. Added: Category Dissolution shift category with full diagnostic criteria, supply-side validation protocol, invisible competitor assessment, desire landscape mapping with Girardian framework, actor analysis in evidence weighing, measured-axis BEAR Position Grid (Performance Gap formula, Positioning Overlap calculation, four quadrants with strategic implications), government trailing data confirmation for market demand, locale awareness (US/CA/AU), Position Grid chart via `tools/position-grid.py`. Removed: Pulse mode (operational feature requiring API access), all chart types except Position Grid. Streamlined to single mode: diagnose.
