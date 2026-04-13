@@ -51,6 +51,8 @@ Deals are entering the pipeline but stalling at evaluation or decision stage. Bu
 
 **Signal priority:** Competitive convergence at the proposal level, economic indicators affecting buyer confidence, external events causing decision paralysis across the vertical, whether stall is industry-wide or client-specific.
 
+**B vs D disambiguation:** These two look similar but the buyer behavior is different. In Type B, buyers evaluate and choose someone else. They're saying no. In Type D, buyers go silent after receiving a proposal. They're not saying no; they're not saying anything. The diagnostic question: "Are prospects choosing competitors, or are they going quiet?" Choosing competitors = B (something changed in how they compare you). Going quiet = D (something is stopping them from deciding at all). If both are happening, classify as E and let the evidence sort it out.
+
 ### Type E: Mixed / Unclear
 "Everything just... slowed down."
 
