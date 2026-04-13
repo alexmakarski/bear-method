@@ -1,15 +1,10 @@
-# BEAR Method v3.17.0
+# BEAR Method v4.0.0
 
 **Buyer Environment Analysis & Repositioning**
 
-BEAR is a diagnostic method for Claude Code that answers two questions most businesses never ask:
+BEAR is a diagnostic method for Claude Code that answers: "Your business development stopped working. Here's why, and the cause isn't inside your business."
 
-1. **Is your category still growing?**
-2. **Are you differentiated within it?**
-
-If the answer to both is yes, you're a star. Invest. If the answer to both is no, you're a dog. No amount of internal optimization will save you.
-
-Most businesses skip this determination entirely. They assume the category is fine and the problem is execution. They fire the agency, rewrite the ads, restructure the team. Six months later, nothing improved. They do it again. BEAR makes the determination they skip.
+It reads market signals, analyzes the competitive environment, identifies what shifted, and produces a diagnosis with repositioning recommendations.
 
 ## How it works
 
@@ -18,7 +13,7 @@ Phase 0:  Workspace Setup
 Phase 1:  Signal Collection (demand, competitive landscape, economic context, industry signals)
 Phase 2A: Shift Diagnosis (what changed, classified into 6 categories)
 Phase 2B: Evidence Weighing (stress-test the diagnosis before acting on it)
-Phase 2C: Market Position Assessment (Star, Cash Cow, Question Mark, or Dog)
+Phase 2C: BEAR Position Grid (two measured axes, four quadrants)
 Phase 3:  Repositioning Recommendation (based on the quadrant, not one-size-fits-all)
 Phase 4:  Scenario Modeling (three conditional projections tied to observable indicators)
 Phase 5:  SimPanel Validation (optional buyer panel testing via simpanel.ai)
@@ -36,7 +31,7 @@ BEAR isn't just for ad performance decline. It handles:
 
 ## Six shift categories
 
-When a business moves from star toward dog, one of six external forces is usually responsible:
+When a business stops growing, one of six external forces is usually responsible:
 
 - **Competitive Convergence (Mimetic Crisis)**: everyone says the same thing, market collapses into price competition
 - **Demand Shift (Desire Migration)**: buyers want something different now
@@ -45,16 +40,19 @@ When a business moves from star toward dog, one of six external forces is usuall
 - **Model Disruption (New Mediator)**: a new player redirected buyer attention
 - **Category Dissolution**: the service category itself is losing viability (supply flood + price anchor collapse + buyer migration to adjacent categories)
 
-## Market Position Assessment
+## BEAR Position Grid
 
-After diagnosing what shifted, BEAR determines where the client sits:
+After diagnosing what shifted, BEAR plots the client on two measured axes:
 
-| | Category Growing | Category Not Growing |
+- **X-axis: Performance Gap** -- how much the client's decline exceeds (or trails) the market's demand change
+- **Y-axis: Positioning Overlap** -- what percentage of competitors share the client's primary messaging angle
+
+| | Underperforming market | Tracking/beating market |
 |---|---|---|
-| **Differentiated** | **Star.** Adapt to the shift, keep investing. | **Cash Cow.** Harvest, explore adjacent categories. |
-| **Undifferentiated** | **Question Mark.** Differentiate now or become a dog. | **Dog.** Fundamental repositioning or exit. |
+| **Differentiated** (low overlap) | **Hibernating.** Positioned differently but bleeding. The differentiation isn't landing or it's aimed at the wrong desire. Repoint, don't abandon. | **Grizzly.** Differentiated and performing. Protect what's working, adapt to the shift. |
+| **Converged** (high overlap) | **Bear Trap.** Losing faster than the market and nothing distinguishes you. Incremental fixes won't work. Fundamental repositioning or category exit. | **Roaming.** Tracking the market but without territory of your own. Differentiate now before conditions tighten. |
 
-The quadrant determines the type of recommendation. What you tell a dog is fundamentally different from what you tell a star having a bad quarter.
+The quadrant determines the type of recommendation. What you tell someone in a Bear Trap is fundamentally different from what you tell a Grizzly having a rough quarter.
 
 ## Signal Registry
 
@@ -80,13 +78,14 @@ Each engagement is tagged with an industry. The tag determines which additional 
 
 ## Chart generation
 
-Five chart types ship with BEAR, generated from JSON data:
+Six chart types ship with BEAR, generated from JSON data:
 
 - Confidence/indicator timeline
 - Search vs. lead gap
 - Competitive convergence map
 - Cost pressure bars
 - Pulse sparklines
+- BEAR Position Grid
 
 ## What makes BEAR different
 
@@ -160,7 +159,7 @@ The open source version gathers equivalent data via manual WebSearch. The method
 |---|---|---|
 | Data collection | Manual WebSearch per source | 18 structured API calls |
 | Country coverage | Any (manual research) | US, Canada, Australia (structured data), any (WebSearch fallback) |
-| Star/Dog determination | Leading indicators only | Leading + trailing government data |
+| Position assessment | Leading indicators only | Leading + trailing government data |
 | Locale awareness | Manual | Automatic (spelling, currency, data sources route by geography) |
 | Chart data | Manual JSON assembly | Auto-populated from API responses |
 | Client delivery | Local files | One-command publish to shared wiki |

@@ -1,6 +1,6 @@
 ---
 name: bear
-version: 3.16.0
+version: 4.0.0
 description: "BEAR (Buyer Environment Analysis & Repositioning). Diagnoses why business development stopped working by analyzing market shifts, competitive convergence, and buyer environment changes. Covers all symptom types: ad performance decline, close rate collapse, referral source drought, and pipeline stall. Produces a temporal market diagnosis with repositioning recommendations. Use when results changed but the business didn't, or when entering a new market and needing competitive landscape intelligence."
 interface: "invoke: /bear {mode} {client-name}"
 modes: [diagnose, pulse]
@@ -581,58 +581,80 @@ Carry the verdict and confidence level into Phase 2C. If the verdict is Inconclu
 
 ---
 
-## Phase 2C: Market Position Assessment
+## Phase 2C: BEAR Position Grid
 
 **Mandatory. Run after Phase 2B, before Phase 3.**
 
-The diagnosis tells you what shifted. The Market Position Assessment tells you what that means strategically. Two questions, four answers.
+The diagnosis tells you what shifted. The BEAR Position Grid tells you what that means strategically. Two measured axes, four quadrants.
 
-### Two questions
+### Two axes
 
-**1. Is the category growing?** Yes or no.
+**X-axis: Performance Gap** (client-specific)
 
-Start with the leading indicators already collected in Phase 1: demand-side Trends data, supply-side validation, business formation data, and industry signals. These tell you what's happening now.
+How much the client's performance change deviates from the market's demand change. This separates "the market hurt everyone" from "the market hurt you specifically."
 
-Then check for trailing confirmation via web research: search for recent GDP-by-industry data (BEA), employment trends by sector (BLS QCEW), and sector revenue reports (Census surveys). These lag by 2 to 6 months but measure actual economic activity, not search interest.
+Formula: `client performance change % - market demand change %`
 
-**When leading and trailing indicators agree**, the determination is strong. Both say growing, or both say contracting.
+- **Client performance change:** from the client's own data (lead volume, close rate, revenue, whatever metric best matches their symptom type). Use the same time period as the market measurement.
+- **Market demand change:** from the validated demand-side Google Trends queries collected in Phase 1A (after supply-side filtering). Confirm with government trailing data where available via web research (search for recent GDP-by-industry data, employment trends by sector, sector revenue reports).
 
-**When they disagree**, re-validate. If Trends says "surging" but government data shows the sector was contracting, the Trends signal is likely supply-side contamination. If Trends says "declining" but the sector is still growing by GDP, the decline may be a keyword shift rather than a category contraction.
+**When Trends and government data disagree**, re-validate. If Trends says "surging" but sector data shows contraction, the Trends signal is likely supply-side contamination. If Trends says "declining" but the sector is still growing by GDP, the decline may be a keyword shift rather than a category contraction.
 
-The answer is Yes if demand-side indicators are rising and available sector data confirms growth or stability. The answer is No if demand is declining or sector data shows contraction.
+Examples:
+- Market demand down 10%, client leads down 40%. Gap = -30%. Deep left.
+- Market demand down 10%, client leads down 12%. Gap = -2%. Near center.
+- Market demand down 10%, client leads down 5%. Gap = +5%. Slightly right. Client is outperforming a declining market.
 
-**2. Is the client differentiated?** Yes or no.
+Midpoint: **0%.** Left of zero = underperforming the market. Right of zero = tracking with or beating the market.
 
-Use the evidence from Phase 1B (competitive landscape) and Phase 2A (shift diagnosis). The answer is Yes if the client mediates a desire no competitor addresses, or has positioning rooted in something competitors cannot copy (founder expertise, local presence, proprietary methodology, unique history). The answer is No if the client's messaging is interchangeable with 5+ competitors and they compete primarily on price or relationships.
+**Y-axis: Positioning Overlap** (client-specific)
 
-### Four quadrants
+% of profiled competitors sharing the client's primary messaging angle. Calculated from Phase 1B competitive landscape research.
 
-| | Category Growing | Category Not Growing |
+Formula: `competitors sharing client's angle / total competitors profiled`
+
+Examples:
+- 3 of 12 competitors share the client's angle = 25%. Low overlap.
+- 9 of 12 competitors share the client's angle = 75%. High overlap.
+
+Midpoint: **50%.** Below = differentiated. Above = converged.
+
+### The four quadrants
+
+| | Performance gap negative (underperforming market) | Performance gap near zero or positive (tracking/beating market) |
 |---|---|---|
-| **Differentiated** | **STAR.** The shift is a disruption, not a death sentence. Hold position, adapt to the specific shift, keep investing. The category rewards differentiated players. | **CASH COW.** The differentiation protects margins but the category won't grow. Harvest returns, don't over-invest, and start exploring adjacent growing categories. |
-| **Undifferentiated** | **QUESTION MARK.** The category growth is the only thing keeping this business alive. When growth slows, this becomes a Dog. Differentiate now while the window is open. | **DOG.** No growth, no differentiation. Internal optimization will not fix this. The recommendation must be fundamental: reposition into an adjacent growing category, build differentiation the market doesn't have, or exit. |
+| **Low overlap** (differentiated) | **Hibernating** | **Grizzly** |
+| **High overlap** (converged) | **Bear Trap** | **Roaming** |
+
+**Grizzly** (tracking market + differentiated): You stand out and your results reflect it. The market may be tough but you're keeping pace or beating it. Protect what's working, lean into differentiation.
+
+**Roaming** (tracking market + converged): Your numbers aren't worse than the market, but you sound like everyone else. Growth or market conditions are masking a positioning problem. When conditions tighten, you have nothing to fall back on. Differentiate now.
+
+**Hibernating** (underperforming + differentiated): You're positioned differently but bleeding faster than the market. Something is off. The differentiation isn't landing, or it's aimed at the wrong desire. Repoint the differentiation, don't abandon it.
+
+**Bear Trap** (underperforming + converged): Losing faster than the market and nothing distinguishes you. Hardest position. Incremental fixes won't work. Fundamental repositioning or category exit.
 
 ### How to produce it
 
-1. **State the category growth determination** with evidence: "Category is [growing / not growing] because [cite data]."
-2. **State the differentiation determination** with evidence: "Client is [differentiated / undifferentiated] because [cite data]."
-3. **Name the quadrant:** Star, Cash Cow, Question Mark, or Dog.
-4. **State the strategic implication in one sentence.** This governs the entire Phase 3 recommendation.
+1. **Calculate the Performance Gap** with evidence: cite the client metric, the market metric, and the gap.
+2. **Calculate the Positioning Overlap** with evidence: cite the competitor count and angle analysis.
+3. **Plot and name the quadrant:** Grizzly, Roaming, Hibernating, or Bear Trap.
+4. **State the strategic implication in one sentence.** This governs the entire Phase 3 recommendation. Example: "This is a Bear Trap. The client is underperforming a declining market by 30 points and their messaging is indistinguishable from 75% of competitors. The recommendation must address fundamental repositioning, not incremental improvement."
 
 ### How this changes the recommendation
 
 | Quadrant | What Phase 3 should recommend |
 |---|---|
-| **Star** | Adapt to the shift. Protect the differentiated position. The category is healthy. |
-| **Cash Cow** | Maintain, don't over-invest. Begin exploring adjacent growth categories. |
-| **Question Mark** | Differentiate aggressively before the growth window closes. |
-| **Dog** | Fundamental change. New category, new offer structure, new positioning. Or exit. |
+| **Grizzly** | Protect and extend. The differentiation is working. Adapt to the specific shift identified in Phase 2A without abandoning the positioning that's keeping results above market. |
+| **Roaming** | Differentiate before the window closes. Results track the market only because conditions allow it. Find and claim positioning territory from the desire landscape before conditions tighten and this becomes a Bear Trap. |
+| **Hibernating** | Repoint, don't abandon. The differentiation exists but isn't converting. Diagnose why: wrong desire, wrong audience, wrong channel, or right message but poor execution. The fix is aim, not identity. |
+| **Bear Trap** | Fundamental change. Not better ads. Not new landing pages. New positioning, new category framing, or category exit. Every dollar spent optimizing within the current position is wasted. |
 
 ---
 
 ## Phase 3: Repositioning Recommendation
 
-Based on the shift diagnosis and the Market Position Assessment, recommend how the client should reposition. The quadrant from Phase 2C determines the type of recommendation. The shift type determines its specific content.
+Based on the shift diagnosis and the BEAR Position Grid, recommend how the client should reposition. The quadrant from Phase 2C determines the type of recommendation. The shift type determines its specific content.
 
 ### Response Framework by Shift Type
 
@@ -918,17 +940,17 @@ The BEAR deliverable is a single document with these sections. Save to:
 
 ---
 
-## Market Position Assessment
+## BEAR Position Grid
 
-**Is the category growing?** {Yes / No}
-{One sentence with evidence.}
+**Performance Gap:** {X}%
+Client {metric} changed {Y}% over {period}. Market demand changed {Z}% (source: {source}). Gap: {Y - Z}%.
 
-**Is the client differentiated?** {Yes / No}
-{One sentence with evidence.}
+**Positioning Overlap:** {N}%
+{N} of {total} profiled competitors share the client's primary messaging angle ({angle name}).
 
-**Position:** {Star / Cash Cow / Question Mark / Dog}
+**Position:** {Grizzly / Roaming / Hibernating / Bear Trap}
 
-**What this means:** {One sentence that governs the recommendation that follows.}
+**What this means:** {One sentence. Example: "This is a Bear Trap. The client is underperforming a declining market by 30 points and their messaging is indistinguishable from 75% of competitors. The recommendation that follows addresses fundamental repositioning, not incremental improvement."}
 
 ---
 
