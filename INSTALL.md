@@ -15,7 +15,7 @@ This copies the BEAR skill and chart tool into your Claude Code directories.
 | Component | Location | Purpose |
 |-----------|----------|---------|
 | BEAR skill | `~/.claude/skills/bear/SKILL.md` | The diagnostic methodology |
-| Chart generator | `~/.claude/tools/bear-charts.py` | Produces PNG charts for diagnoses and pulses |
+| Position Grid chart | `~/.claude/tools/position-grid.py` | Produces the BEAR Position Grid PNG |
 
 ## Requirements
 
@@ -32,7 +32,6 @@ Open Claude Code in any project directory:
 
 ```
 /bear diagnose {client-name}    # Full market shift diagnosis
-/bear pulse {client-name}       # Weekly monitoring check (requires prior diagnosis)
 ```
 
 BEAR will ask for the required inputs (client details, keywords, geography, symptom description) before starting.
@@ -43,14 +42,10 @@ BEAR uses Google Trends data for demand signal analysis. The open source version
 
 ## Chart generation
 
-BEAR includes a chart generator (`bear-charts.py`) that produces five chart types from JSON input:
+BEAR includes a Position Grid chart generator (`position-grid.py`) that plots the client on the 2x2 quadrant grid:
 
 ```bash
-python3 ~/.claude/tools/bear-charts.py timeline data.json output.png
-python3 ~/.claude/tools/bear-charts.py convergence data.json output.png
-python3 ~/.claude/tools/bear-charts.py search-lead-gap data.json output.png
-python3 ~/.claude/tools/bear-charts.py cost-pressure data.json output.png
-python3 ~/.claude/tools/bear-charts.py sparkline data.json output.png
+python3 ~/.claude/tools/position-grid.py data.json output.png
 ```
 
 ## Optional: SimPanel integration
@@ -61,8 +56,8 @@ BEAR's Phase 5 optionally validates repositioning recommendations against synthe
 
 This open source version gives you the full BEAR methodology. If you find yourself running diagnoses regularly, the operational version at [ClickMakers](https://clickmakers.io) removes the manual data collection work:
 
-- **16 live data feeds** including Google Trends, Maps, Shopping, Autocomplete, GDP by industry, employment by county, sector revenue, FRED, BLS JOLTS, commodity prices, shipping rates, news sentiment, wage trends, Polymarket, and more
-- **Leading + trailing signal stack** that confirms the Star/Dog determination with both real-time Trends data and government economic data
+- **18 live data feeds** including Google Trends, Maps, Shopping, Autocomplete, GDP by industry, employment by county, sector revenue, FRED, BLS JOLTS, commodity prices, shipping rates, news sentiment, wage trends, Polymarket, and more
+- **Leading + trailing signal stack** that confirms the Position Grid determination with both real-time Trends data and government economic data
 - **One-command publishing** to a shared wiki your clients can access
 - **Team sync** so any team member can pulse a client another team member diagnosed
 - **Diagnosis diffs** that compare two diagnoses side by side for QBRs

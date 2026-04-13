@@ -1,5 +1,5 @@
 #!/bin/bash
-# BEAR Method Installer v3.16.0
+# BEAR Method Installer v4.0.0
 # Copies the BEAR skill and tools into your Claude Code directories.
 # Run from the folder containing this script.
 
@@ -28,19 +28,24 @@ echo "Installing BEAR skill..."
 cp -R "$SOURCE_SKILLS/bear" "$SKILLS_DIR/"
 echo "  Installed: ~/.claude/skills/bear/SKILL.md"
 
-# Install chart tool
-if [ -f "$SOURCE_TOOLS/bear-charts.py" ]; then
-    echo "Installing chart generator..."
-    cp "$SOURCE_TOOLS/bear-charts.py" "$TOOLS_DIR/"
-    echo "  Installed: ~/.claude/tools/bear-charts.py"
+# Install Position Grid chart tool
+if [ -f "$SOURCE_TOOLS/position-grid.py" ]; then
+    echo "Installing Position Grid chart generator..."
+    cp "$SOURCE_TOOLS/position-grid.py" "$TOOLS_DIR/"
+    echo "  Installed: ~/.claude/tools/position-grid.py"
+fi
+
+# Clean up old chart tool if present
+if [ -f "$TOOLS_DIR/bear-charts.py" ]; then
+    rm "$TOOLS_DIR/bear-charts.py"
+    echo "  Removed old bear-charts.py"
 fi
 
 echo ""
-echo "BEAR v3.16.0 installed successfully."
+echo "BEAR v4.0.0 installed successfully."
 echo ""
 echo "Quick start:"
 echo "  /bear diagnose {client-name}    # Full market shift diagnosis"
-echo "  /bear pulse {client-name}       # Weekly monitoring check"
 echo ""
-echo "Optional: install matplotlib for chart generation:"
+echo "Optional: install matplotlib for Position Grid chart generation:"
 echo "  pip install matplotlib"
